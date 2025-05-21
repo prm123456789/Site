@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INCONNU PORTAL</title>
+  <link rel="icon" href="https://files.catbox.moe/c6g5ui.jpg" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: url('https://files.catbox.moe/c6g5ui.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      color: #fff;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid #ffffff20;
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 20px #00f7ff66;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 30px;
+      color: #fff;
+      text-shadow: 0 0 10px #00ffff;
+      font-weight: bold;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      color: #fff;
+      text-decoration: none;
+      background: linear-gradient(135deg, #ff0040, #000, #00ffff);
+      border: none;
+      border-radius: 10px;
+      background-size: 300%;
+      animation: pulse 8s infinite linear;
+      font-weight: 600;
+      transition: transform 0.3s ease;
+    }
+
+    .button:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes pulse {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      width: 100%;
+      text-align: center;
+      font-size: 13px;
+      color: #ccc;
+      z-index: 2;
+    }
+
+    canvas.snow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <canvas class="snow"></canvas>
+
+  <div class="container">
+    <h1>WELCOME TO INCONNU TECH BOT SESSION</h1>
+    <a href="/pair" class="button" target="_blank">PAIRING-CODE</a>
+    <a href="/qr" class="button" target="_blank">QR-CODE</a>
+    <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" class="button" target="_blank">FORK INCONNU-XD-V1</a>
+    <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" class="button" target="_blank">FORK INCONNU-XD-V2</a>
+    <a href="https://github.com/INCONNU-BOY/QUEEN-ASUNA-MD/fork" class="button" target="_blank">FORK QUEEN-ASUNA-MD</a>
+    <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" class="button" target="_blank">WHATSAPP</a>
+  </div>
+
+  <footer>
+    POWERED BY INCONNU BOYTECH &copy; <span id="currentYear"></span>
+  </footer>
+
+  <script>
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    const canvas = document.querySelector('.snow');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+    let flakes = [];
+
+    function createFlake() {
+      const x = Math.random() * width;
+      const y = 0;
+      const size = Math.random() * 4 + 1;
+      const speed = Math.random() * 2 + 1;
+      flakes.push({ x, y, size, speed });
+    }
+
+    function drawFlakes() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = 'white';
+      flakes.forEach((flake, i) => {
+        ctx.beginPath();
+        ctx.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2);
+        ctx.fill();
+        flake.y += flake.speed;
+        if (flake.y > height) flakes.splice(i, 1);
+      });
+    }
+
+    function snowLoop() {
+      drawFlakes();
+      if (flakes.length < 100) createFlake();
+      requestAnimationFrame(snowLoop);
+    }
+
+    snowLoop();
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>

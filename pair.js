@@ -77,8 +77,7 @@ var randomItem = selectRandomItem(items);
                         const string_session = mega_url.replace('https://mega.nz/file/', '');
                         let md = "INCONNU~XD~" + string_session;
                         let code = await sock.sendMessage(sock.user.id, { text: md });
-                        let desc = `                    
-╔═════════════════
+                        let desc = `      ╔═════════════════
 ║ *SESSION CONNECTED*         
 ╠═════════════════
 ║ *© INCONNU BOY TECH*         
@@ -141,4 +140,4 @@ setInterval(() => {
     process.exit();
 }, 180000); //30min*/
 module.exports = router;
-              
+                

@@ -85,7 +85,7 @@ text: desc,
 contextInfo: {
 externalAdReply: {
 title: "INCONNNU BOY TECH",
-thumbnailUrl: "https://files.catbox.moe/88o37i.jpg",
+thumbnailUrl: "https://files.catbox.moe/e1k73u.jpg",
 sourceUrl: "https://whatsapp.com/channel/0029VaojbRDKrWR2a38S5O1k",
 mediaType: 1,
 renderLargerThumbnail: true
@@ -108,7 +108,7 @@ text: desc,
 contextInfo: {
 externalAdReply: {
 title: " INCONNU BOY TECH  ",
-thumbnailUrl: "https://files.catbox.moe/88o37i.jpg",
+thumbnailUrl: "https://files.catbox.moe/e1k73u.jpg",
 sourceUrl: "https://whatsapp.com/channel/0029VaojbRDKrWR2a38S5O1k",
 mediaType: 2,
 renderLargerThumbnail: true,

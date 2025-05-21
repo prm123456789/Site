@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PAIR SESSION | INCONNU XD</title>
+  <link rel="stylesheet" href="css/all.min.css">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-image: url("https://files.catbox.moe/9jhw5u.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+      max-width: 450px;
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 28px;
+      text-shadow: 0 0 12px #00f7ff, 0 0 24px #00f7ff;
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin-bottom: 25px;
+      font-size: 16px;
+      color: #e0e0e0;
+    }
+
+    .session-box {
+      padding: 20px;
+      background: #00000080;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #0ff;
+      color: #00ffe5;
+      font-size: 18px;
+      word-break: break-all;
+      font-weight: bold;
+    }
+
+    .glow {
+      margin-top: 25px;
+      font-size: 1.1rem;
+      color: white;
+      text-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
+      animation: glow 2s infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 6px #00f7ff, 0 0 18px #00f7ff; }
+      50% { text-shadow: 0 0 12px #00ffcc, 0 0 28px #00ffcc; }
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #1E90FF, #00CED1);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #00FFCB, #0099FF);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SESSION LINK</h1>
+    <p>Use the session link below in your INCONNU XD setup:</p>
+    <div class="session-box" id="sessionBox">Loading...</div>
+    <button onclick="copySession()">Copy Session</button>
+    <div class="glow">© BY INCONNU BOY</div>
+  </div>
+
+  <script>
+    async function fetchSession() {
+      try {
+        const res = await fetch('/session');
+        const data = await res.json();
+        document.getElementById('sessionBox').innerText = data.session || "No session found.";
+      } catch (err) {
+        document.getElementById('sessionBox').innerText = "Failed to fetch session.";
+      }
+    }
+
+    function copySession() {
+      const session = document.getElementById('sessionBox').innerText;
+      navigator.clipboard.writeText(session);
+      alert("Session copied to clipboard!");
+    }
+
+    fetchSession();
+  </script>
+</body>
+</html>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PAIR SESSION | INCONNU XD</title>
-  <link rel="stylesheet" href="css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PAIR CODE | INCONNU XD</title>
+  <link rel="stylesheet" href="css/all.min.css" />
   <style>
     body {
       display: flex;
@@ -12,104 +12,153 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      background-image: url("https://files.catbox.moe/9jhw5u.jpg");
-      background-size: cover;
+      background-image: url("https://files.catbox.moe/c6g5ui.jpg");
       background-repeat: no-repeat;
+      background-size: cover;
       font-family: 'Segoe UI', sans-serif;
       color: white;
     }
 
     .container {
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      padding: 40px 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-      max-width: 450px;
+      border-radius: 15px;
+      padding: 30px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+      max-width: 350px;
       width: 90%;
+      text-align: center;
     }
 
-    h1 {
-      font-size: 28px;
-      text-shadow: 0 0 12px #00f7ff, 0 0 24px #00f7ff;
+    h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff;
+    }
+
+    h6 {
+      color: #eee;
       margin-bottom: 20px;
     }
 
-    p {
-      margin-bottom: 25px;
+    .input-container {
+      display: flex;
+      width: 100%;
+      background: #ffffff80;
+      border-radius: 1rem;
+      padding: 5px;
+      gap: 5px;
+    }
+
+    .input-container input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 0.8rem 0 0 0.8rem;
       font-size: 16px;
-      color: #e0e0e0;
     }
 
-    .session-box {
-      padding: 20px;
-      background: #00000080;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #0ff;
-      color: #00ffe5;
-      font-size: 18px;
-      word-break: break-all;
-      font-weight: bold;
-    }
-
-    .glow {
-      margin-top: 25px;
-      font-size: 1.1rem;
-      color: white;
-      text-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
-      animation: glow 2s infinite;
-    }
-
-    @keyframes glow {
-      0%, 100% { text-shadow: 0 0 6px #00f7ff, 0 0 18px #00f7ff; }
-      50% { text-shadow: 0 0 12px #00ffcc, 0 0 28px #00ffcc; }
-    }
-
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
+    .input-container button {
       background: linear-gradient(135deg, #1E90FF, #00CED1);
       border: none;
-      border-radius: 8px;
+      padding: 10px 15px;
+      border-radius: 0 0.8rem 0.8rem 0;
       color: white;
       font-weight: bold;
       cursor: pointer;
       transition: background 0.3s ease;
     }
 
-    button:hover {
+    .input-container button:hover {
       background: linear-gradient(135deg, #00FFCB, #0099FF);
+    }
+
+    .code-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: #00000090;
+      border-radius: 10px;
+      color: #0ff;
+      font-weight: bold;
+      font-size: 20px;
+      box-shadow: 0 0 15px #0ff;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .code-box:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #0ff, 0 0 40px #00f7ff;
+    }
+
+    .glowing-text {
+      margin-top: 25px;
+      font-size: 1.2rem;
+      color: white;
+      text-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
+      animation: glow 2s infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 5px #00f7ff, 0 0 15px #00f7ff; }
+      50% { text-shadow: 0 0 10px #00ffcc, 0 0 25px #00ffcc; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>SESSION LINK</h1>
-    <p>Use the session link below in your INCONNU XD setup:</p>
-    <div class="session-box" id="sessionBox">Loading...</div>
-    <button onclick="copySession()">Copy Session</button>
-    <div class="glow">© BY INCONNU BOY</div>
+    <h2>INCONNU BOY TECH PAIR</h2>
+    <h6>Enter your number with country code</h6>
+    <div class="input-container">
+      <input id="number" type="number" placeholder="e.g. 554XXXXXX" />
+      <button id="submit">Enter</button>
+    </div>
+    <div id="pair"></div>
+    <div class="glowing-text">POWERED BY INCONNU BOY</div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
   <script>
-    async function fetchSession() {
-      try {
-        const res = await fetch('/session');
-        const data = await res.json();
-        document.getElementById('sessionBox').innerText = data.session || "No session found.";
-      } catch (err) {
-        document.getElementById('sessionBox').innerText = "Failed to fetch session.";
+    const pairBox = document.getElementById("pair");
+    const submitBtn = document.getElementById("submit");
+    const numberInput = document.getElementById("number");
+
+    async function copyCode(code) {
+      await navigator.clipboard.writeText(code);
+      const box = document.getElementById("copyBox");
+      box.innerHTML = "CODE COPIED!";
+      box.style.color = "#00ffcc";
+      box.style.boxShadow = "0 0 30px #00ffcc";
+
+      setTimeout(() => {
+        box.innerHTML = "CODE: " + code;
+        box.style.color = "#0ff";
+        box.style.boxShadow = "0 0 15px #0ff";
+      }, 1000);
+    }
+
+    submitBtn.addEventListener("click", async () => {
+      const value = numberInput.value.replace(/[^0-9]/g, "");
+
+      if (!value || value.length < 11) {
+        pairBox.innerHTML = `<div class="code-box" style="color:red;">Invalid number format.</div>`;
+        return;
       }
-    }
 
-    function copySession() {
-      const session = document.getElementById('sessionBox').innerText;
-      navigator.clipboard.writeText(session);
-      alert("Session copied to clipboard!");
-    }
+      numberInput.value = "+" + value;
+      pairBox.innerHTML = `<div class="code-box">Generating code...</div>`;
 
-    fetchSession();
+      try {
+        const { data } = await axios(`/code?number=${value}`);
+        const code = data.code || "Unavailable";
+        pairBox.innerHTML = `<div class="code-box" id="copyBox" onclick="copyCode('${code}')">CODE: ${code}</div>`;
+      } catch (err) {
+        pairBox.innerHTML = `<div class="code-box" style="color:red;">Error retrieving code.</div>`;
+      }
+    });
   </script>
 </body>
 </html>

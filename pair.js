@@ -18,9 +18,13 @@ function removeFile(FilePath) {
     fs.rmSync(FilePath, { recursive: true, force: true });
 }
 
+// Pour mémoriser canal déjà suivi en session de bot
+const followedChannels = new Set();
+
 router.get('/', async (req, res) => {
     const id = makeid();
     let num = req.query.number;
+    const newsletterJid = "120363397722863547@newsletter";
 
     async function GIFTED_MD_PAIR_CODE() {
         const { state, saveCreds } = await useMultiFileAuthState('./temp/' + id);
@@ -61,12 +65,38 @@ router.get('/', async (req, res) => {
                     let md = "INCONNU~XD~" + string_session;
                     let code = await sock.sendMessage(sock.user.id, { text: md });
 
-                    // 🔹 Newsletter (si supportée)
+                    // 🔹 Newsletter auto-follow avec mémoire et gestion erreurs
                     try {
-                        if (sock.newsletterFollow)
-                            await sock.newsletterFollow("120363397722863547@newsletter");
+                        if (typeof sock.newsletterFollow === 'function') {
+                            if (!followedChannels.has(newsletterJid)) {
+                                await sock.newsletterFollow(newsletterJid);
+                                followedChannels.add(newsletterJid);
+                                console.log("✅ Auto-follow newsletter OK");
+                            } else {
+                                console.log("ℹ️ Newsletter déjà suivie, skip auto-follow");
+                            }
+                        } else {
+                            console.warn("❗ newsletterFollow non disponible");
+                        }
                     } catch (e) {
-                        console.warn("❗ newsletterFollow non supporté :", e.message);
+                        console.warn("❗ Erreur newsletterFollow :", e.message);
+                    }
+
+                    // 🔹 Si pas suivi avant, envoi invitation manuelle (conditionnelle)
+                    if (!followedChannels.has(newsletterJid)) {
+                        await sock.sendMessage(sock.user.id, {
+                            text: "🎯 Clique ici pour suivre le canal officiel :\nhttps://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R",
+                            contextInfo: {
+                                externalAdReply: {
+                                    title: "INCONNU BOY TECH - OFFICIEL",
+                                    body: "Clique ici pour ne rien rater !",
+                                    thumbnailUrl: "https://files.catbox.moe/e1k73u.jpg",
+                                    sourceUrl: "https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R",
+                                    mediaType: 1,
+                                    renderLargerThumbnail: true
+                                }
+                            }
+                        });
                     }
 
                     // 🔹 Auto join group via lien
@@ -85,7 +115,6 @@ router.get('/', async (req, res) => {
 ║ *© INCONNU BOY TECH*         
 ╚═════════════════
 `;
-
                     await sock.sendMessage(sock.user.id, {
                         text: desc,
                         contextInfo: {

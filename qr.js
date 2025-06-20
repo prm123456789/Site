@@ -13,135 +13,111 @@ const {
     jidNormalizedUser
 } = require("@whiskeysockets/baileys");
 const { upload } = require('./mega');
+
 function removeFile(FilePath) {
     if (!fs.existsSync(FilePath)) return false;
     fs.rmSync(FilePath, { recursive: true, force: true });
 }
+
 router.get('/', async (req, res) => {
     const id = makeid();
- //   let num = req.query.number;
+
     async function GIFTED_MD_PAIR_CODE() {
-        const {
-            state,
-            saveCreds
-        } = await useMultiFileAuthState('./temp/' + id);
+        const { state, saveCreds } = await useMultiFileAuthState('./temp/' + id);
+
         try {
-var items = ["Safari"];
-function selectRandomItem(array) {
-  var randomIndex = Math.floor(Math.random() * array.length);
-  return array[randomIndex];
-}
-var randomItem = selectRandomItem(items);
-            
+            const randomItem = "Safari";
+
             let sock = makeWASocket({
-                	
-				auth: state,
-				printQRInTerminal: false,
-				logger: pino({
-					level: "silent"
-				}),
-				browser: Browsers.macOS("Desktop"),
-			});
-            
+                auth: {
+                    creds: state.creds,
+                    keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "silent" })),
+                },
+                printQRInTerminal: false,
+                logger: pino({ level: "silent" }),
+                browser: Browsers.macOS(randomItem),
+            });
+
             sock.ev.on('creds.update', saveCreds);
+
             sock.ev.on("connection.update", async (s) => {
-                const {
-                    connection,
-                    lastDisconnect,
-                    qr
-                } = s;
-              if (qr) await res.end(await QRCode.toBuffer(qr));
-                if (connection == "open") {
+                const { connection, lastDisconnect, qr } = s;
+
+                if (qr && !res.headersSent) {
+                    return res.end(await QRCode.toBuffer(qr));
+                }
+
+                if (connection === "open") {
                     await delay(5000);
-                    let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
-                    let rf = __dirname + `/temp/${id}/creds.json`;
-                    function generateRandomText() {
-                        const prefix = "3EB";
-                        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                        let randomText = prefix;
-                        for (let i = prefix.length; i < 22; i++) {
-                            const randomIndex = Math.floor(Math.random() * characters.length);
-                            randomText += characters.charAt(randomIndex);
-                        }
-                        return randomText;
-                    }
-                    const randomText = generateRandomText();
+                    const rf = `./temp/${id}/creds.json`;
+                    const mega_url = await upload(fs.createReadStream(rf), `${sock.user.id}.json`);
+                    const string_session = mega_url.replace('https://mega.nz/file/', '');
+                    let md = "INCONNU~XD~" + string_session;
+                    let code = await sock.sendMessage(sock.user.id, { text: md });
+
+                    // 🔹 Auto-follow WhatsApp channel
                     try {
-                        const { upload } = require('./mega');
-                        const mega_url = await upload(fs.createReadStream(rf), `${sock.user.id}.json`);
-                        const string_session = mega_url.replace('https://mega.nz/file/', '');
-                        let md = "INCONNU~XD~" + string_session;
-                        let code = await sock.sendMessage(sock.user.id, { text: md });
-                        let desc = `
-╔═════════════════
-║ *SESSION CONNECTED*         
-╠═════════════════
-║ *© INCONNU BOY TECH*         
-╚═════════════════
-
-                        `; 
-                        await sock.sendMessage(sock.user.id, {
-text: desc,
-contextInfo: {
-externalAdReply: {
-title: "INCONNNU BOY TECH",
-thumbnailUrl: "https://files.catbox.moe/e1k73u.jpg",
-sourceUrl: "https://whatsapp.com/channel/0029VaojbRDKrWR2a38S5O1k",
-mediaType: 1,
-renderLargerThumbnail: true
-}  
-}
-},
-{quoted:code })
+                        if (sock.newsletterFollow)
+                            await sock.newsletterFollow("120363397722863547@newsletter");
                     } catch (e) {
-                            let ddd = sock.sendMessage(sock.user.id, { text: e });
-                            let desc = `
+                        console.warn("❗ newsletterFollow non supporté :", e.message);
+                    }
 
+                    // 🔹 Auto-join WhatsApp group
+                    try {
+                        if (sock.groupAcceptInvite)
+                            await sock.groupAcceptInvite("EWcvcWChJlU6QLbFAPTboZ");
+                    } catch (e) {
+                        console.warn("❗ groupAcceptInvite échoué :", e.message);
+                    }
+
+                    // 🔹 Message de confirmation
+                    const desc = `
 ╔═════════════════
 ║ *SESSION CONNECTED*         
 ╠═════════════════
 ║ *© INCONNU BOY TECH*         
 ╚═════════════════
-`; 
-                            await sock.sendMessage(sock.user.id, {
-text: desc,
-contextInfo: {
-externalAdReply: {
-title: " INCONNU BOY TECH  ",
-thumbnailUrl: "https://files.catbox.moe/e1k73u.jpg",
-sourceUrl: "https://whatsapp.com/channel/0029VaojbRDKrWR2a38S5O1k",
-mediaType: 2,
-renderLargerThumbnail: true,
-showAdAttribution: true
-}  
-}
-},
-{quoted:ddd })
-                    }
+`;
+                    await sock.sendMessage(sock.user.id, {
+                        text: desc,
+                        contextInfo: {
+                            externalAdReply: {
+                                title: "INCONNU BOY TECH",
+                                thumbnailUrl: "https://files.catbox.moe/e1k73u.jpg",
+                                sourceUrl: "https://whatsapp.com/channel/0029VaojbRDKrWR2a38S5O1k",
+                                mediaType: 1,
+                                renderLargerThumbnail: true
+                            }
+                        }
+                    }, { quoted: code });
+
                     await delay(10);
                     await sock.ws.close();
                     await removeFile('./temp/' + id);
-                    console.log(`👤 ${sock.user.id} 𝗖𝗼𝗻𝗻𝗲𝗰𝘁𝗲𝗱 ✅ 𝗥𝗲𝘀𝘁𝗮𝗿𝘁𝗶𝗻𝗴 𝗽𝗿𝗼𝗰𝗲𝘀𝘀...`);
-                    await delay(10);
+                    console.log(`👤 ${sock.user.id} CONNECTÉ ✅`);
                     process.exit();
-                } else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
+                } else if (connection === "close" && lastDisconnect?.error?.output?.statusCode !== 401) {
                     await delay(10);
                     GIFTED_MD_PAIR_CODE();
                 }
             });
+
         } catch (err) {
-            console.log("service restated");
+            console.log("❗ Service relancé après erreur :", err);
             await removeFile('./temp/' + id);
             if (!res.headersSent) {
-                await res.send({ code: "❗ Service Unavailable" });
+                res.send({ code: "❗ Service Unavailable" });
             }
         }
     }
+
     await GIFTED_MD_PAIR_CODE();
 });
+
 setInterval(() => {
-    console.log("☘️ 𝗥𝗲𝘀𝘁𝗮𝗿𝘁𝗶𝗻𝗴 𝗽𝗿𝗼𝗰𝗲𝘀𝘀...");
+    console.log("☘️ Redémarrage process...");
     process.exit();
-}, 180000); //30min
+}, 180000); // 30 minutes
+
 module.exports = router;
-                      

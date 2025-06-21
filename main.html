@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,157 +17,183 @@
       overflow: hidden;
       position: relative;
       color: #fff;
-    }
+    }@keyframes rainbowBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    @keyframes rainbowBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+.overlay {
+  position: absolute; top: 0; left: 0; height: 100%; width: 100%;
+  background-color: rgba(0, 0, 0, 0.5); z-index: 1;
+}
 
-    .overlay {
-      position: absolute; top: 0; left: 0; height: 100%; width: 100%;
-      background-color: rgba(0, 0, 0, 0.5); z-index: 1;
-    }
+.container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid #ffffff20;
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+  width: 90%;
+  max-width: 550px;
+  animation: fadeIn 2s ease;
+}
 
-    .container {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      padding: 40px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid #ffffff20;
-      border-radius: 20px;
-      backdrop-filter: blur(15px);
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-      width: 90%;
-      max-width: 550px;
-      animation: fadeIn 2s ease;
-    }
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
+h1 {
+  font-size: 28px;
+  margin-bottom: 25px;
+  text-shadow: 0 0 15px #00ffff;
+  font-weight: bold;
+}
 
-    h1 {
-      font-size: 28px;
-      margin-bottom: 25px;
-      text-shadow: 0 0 15px #00ffff;
-      font-weight: bold;
-    }
+.button, .confirm, .like-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  color: #fff;
+  background: linear-gradient(135deg, #ff0040, #ff9900, #00ffff);
+  border: none;
+  border-radius: 12px;
+  background-size: 300%;
+  animation: pulse 6s infinite linear;
+  font-weight: bold;
+  font-size: 16px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
 
-    .button, .confirm, .like-btn {
-      display: block;
-      width: 100%;
-      padding: 14px;
-      margin: 12px 0;
-      color: #fff;
-      background: linear-gradient(135deg, #ff0040, #ff9900, #00ffff);
-      border: none;
-      border-radius: 12px;
-      background-size: 300%;
-      animation: pulse 6s infinite linear;
-      font-weight: bold;
-      font-size: 16px;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-    }
+.button:hover, .confirm:hover, .like-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #ffffff77;
+}
 
-    .button:hover, .confirm:hover, .like-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px #ffffff77;
-    }
+@keyframes pulse {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    @keyframes pulse {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 15px 0;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  outline: none;
+  font-size: 16px;
+}
 
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 15px 0;
-      border-radius: 8px;
-      border: none;
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-      outline: none;
-      font-size: 16px;
-    }
+.hidden { display: none; opacity: 0; transition: opacity 0.5s ease; }
+.visible { display: block; opacity: 1; }
 
-    .hidden { display: none; opacity: 0; transition: opacity 0.5s ease; }
-    .visible { display: block; opacity: 1; }
+.logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto 20px auto;
+  animation: logoFade 3s ease forwards;
+}
 
-    .logo {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      margin: 0 auto 20px auto;
-      animation: logoFade 3s ease forwards;
-    }
+footer {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: #ccc;
+  z-index: 2;
+}
 
-    footer {
-      position: absolute;
-      bottom: 15px;
-      width: 100%;
-      text-align: center;
-      font-size: 13px;
-      color: #ccc;
-      z-index: 2;
-    }
+#stats {
+  margin-top: 20px;
+  font-size: 15px;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
 
-    #stats {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #fff;
-    }
+.like-btn.liked {
+  background: linear-gradient(135deg, #00ffcc, #00ff99, #00ccff);
+}
 
-    .like-btn.liked {
-      background: linear-gradient(135deg, #00ffcc, #00ff99, #00ccff);
-    }
+@keyframes logoFade {
+  0% { opacity: 0; transform: scale(0); }
+  100% { opacity: 1; transform: scale(1); }
+}
 
-    @keyframes logoFade {
-      0% { opacity: 0; transform: scale(0); }
-      100% { opacity: 1; transform: scale(1); }
-    }
   </style>
 </head>
 <body>
   <div class="overlay"></div>
   <div class="container">
     <img class="logo" src="https://files.catbox.moe/c6g5ui.jpg" alt="INCONNU LOGO" />
-    <h1>WELCOME TO INCONNU TECH BOT SESSION</h1>
+    <h1>WELCOME TO INCONNU TECH BOT SESSION</h1><div id="nameSection">
+  <input type="text" id="username" placeholder="Enter your name..." />
+  <button class="confirm" onclick="confirmName()">CONFIRM</button>
+</div>
 
-    <div id="nameSection">
-      <input type="text" id="username" placeholder="Enter your name..." />
-      <button class="confirm" onclick="confirmName()">CONFIRM</button>
-    </div>
+<div id="buttonSection" class="hidden">
+  <a href="/pair" class="button" target="_blank">🚀 START SESSION (PAIR)</a>
+  <a href="/qr" class="button" target="_blank">📷 SCAN QR CODE</a>
+  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" class="button" target="_blank">📦 FORK INCONNU-XD-V1</a>
+  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" class="button" target="_blank">📦 FORK INCONNU-XD-V2</a>
+  <a href="https://github.com/INCONNU-BOY/QUEEN-ASUNA-MD/fork" class="button" target="_blank">📦 FORK QUEEN-ASUNA-MD</a>
+  <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" class="button" target="_blank">💬 WHATSAPP CHANNEL</a>
+</div>
 
-    <div id="buttonSection" class="hidden">
-      <a href="/pair" class="button" target="_blank">PAIRING-CODE</a>
-      <a href="/qr" class="button" target="_blank">QR-CODE</a>
-      <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" class="button" target="_blank">FORK INCONNU-XD-V1</a>
-      <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" class="button" target="_blank">FORK INCONNU-XD-V2</a>
-      <a href="https://github.com/INCONNU-BOY/QUEEN-ASUNA-MD/fork" class="button" target="_blank">FORK QUEEN-ASUNA-MD</a>
-      <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" class="button" target="_blank">WHATSAPP</a>
-    </div>
+<button id="likeBtn" class="like-btn">👍 LIKE</button>
+<div id="stats">Views: <span id="viewCount">0</span> • Likes: <span id="likeCount">0</span></div>
 
-    <button id="likeBtn" class="like-btn">👍 LIKE</button>
-    <div id="stats">Views: <span id="viewCount">0</span> • Likes: <span id="likeCount">0</span></div>
-  </div>
-
-  <footer>
+  </div>  <footer>
     POWERED BY INCONNU BOYTECH &copy; <span id="currentYear"></span>
-  </footer>
-
-  <script>
+  </footer>  <script>
     document.getElementById("currentYear").textContent = new Date().getFullYear();
 
     const viewCount = document.getElementById("viewCount");
     const likeCount = document.getElementById("likeCount");
     const likeBtn = document.getElementById("likeBtn");
+
+    // Count total views using sessionStorage instead of localStorage
+    let totalViews = parseInt(localStorage.getItem("views") || 0);
+    if (!sessionStorage.getItem("viewed")) {
+      totalViews++;
+      localStorage.setItem("views", totalViews);
+      sessionStorage.setItem("viewed", true);
+    }
+    viewCount.innerText = totalViews;
+
+    let likes = parseInt(localStorage.getItem("likes") || 0);
+    likeCount.innerText = likes;
+
+    if (localStorage.getItem("liked")) {
+      likeBtn.classList.add("liked");
+      likeBtn.innerText = "💙 LIKED";
+    }
+
+    likeBtn.addEventListener("click", () => {
+      if (!localStorage.getItem("liked")) {
+        likes++;
+        localStorage.setItem("likes", likes);
+        localStorage.setItem("liked", true);
+        likeBtn.classList.add("liked");
+        likeBtn.innerText = "💙 LIKED";
+        likeCount.innerText = likes;
+      }
+    });
 
     function confirmName() {
       const name = document.getElementById("username").value.trim();
@@ -177,31 +202,9 @@
         document.getElementById("nameSection").classList.add("hidden");
         document.getElementById("buttonSection").classList.remove("hidden");
         document.getElementById("buttonSection").classList.add("visible");
-
-        // Compteur de vues
-        let views = parseInt(localStorage.getItem("views") || 0);
-        views++;
-        localStorage.setItem("views", views);
-        viewCount.innerText = views;
       } else {
         alert("Please enter a valid name.");
       }
     }
-
-    likeBtn.addEventListener("click", () => {
-      if (!likeBtn.classList.contains("liked")) {
-        let likes = parseInt(localStorage.getItem("likes") || 0);
-        likes++;
-        localStorage.setItem("likes", likes);
-        likeCount.innerText = likes;
-        likeBtn.classList.add("liked");
-        likeBtn.innerText = "💙 LIKED";
-      }
-    });
-
-    // Load saved stats
-    viewCount.innerText = localStorage.getItem("views") || "0";
-    likeCount.innerText = localStorage.getItem("likes") || "0";
-  </script>
-</body>
+  </script></body>
 </html>

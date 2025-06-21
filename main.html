@@ -73,7 +73,7 @@ h1 {
   to { transform: translateY(0); opacity: 1; }
 }
 
-.button {
+.button, .confirm {
   display: block;
   width: 100%;
   padding: 14px;
@@ -88,9 +88,10 @@ h1 {
   font-weight: bold;
   font-size: 16px;
   transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
-.button:hover {
+.button:hover, .confirm:hover {
   transform: scale(1.05);
   box-shadow: 0 0 15px #ffffff77;
 }
@@ -149,7 +150,8 @@ input {
   </audio>  <div class="container">
     <img class="logo" src="https://files.catbox.moe/c6g5ui.jpg" alt="INCONNU LOGO" />
     <h1>WELCOME TO INCONNU TECH BOT SESSION</h1>
-    <input type="text" id="username" placeholder="Enter your name..." oninput="unlockButtons()" /><div id="buttonSection" class="hidden">
+    <input type="text" id="username" placeholder="Enter your name..." />
+    <button class="confirm" onclick="confirmName()">CONFIRM</button><div id="buttonSection" class="hidden">
   <a href="/pair" class="button" target="_blank">PAIRING-CODE</a>
   <a href="/qr" class="button" target="_blank">QR-CODE</a>
   <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" class="button" target="_blank">FORK INCONNU-XD-V1</a>
@@ -159,15 +161,18 @@ input {
 </div>
 
   </div>  <footer>
-    POWERED BY INCONNU BOY TECH &copy; <span id="currentYear"></span>
+    POWERED BY INCONNU BOYTECH &copy; <span id="currentYear"></span>
   </footer>  <script>
     document.getElementById("currentYear").textContent = new Date().getFullYear();
 
-    function unlockButtons() {
-      const name = document.getElementById('username').value.trim();
-      const section = document.getElementById('buttonSection');
-      if (name.length > 0) section.classList.remove('hidden');
-      else section.classList.add('hidden');
+    function confirmName() {
+      const name = document.getElementById("username").value.trim();
+      if (name.length > 0) {
+        localStorage.setItem("username", name);
+        document.getElementById("buttonSection").classList.remove("hidden");
+      } else {
+        alert("Please enter a valid name.");
+      }
     }
   </script></body>
 </html>

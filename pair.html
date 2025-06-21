@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,114 +16,122 @@
       background-size: cover;
       font-family: 'Segoe UI', sans-serif;
       color: white;
-    }
+    }.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  animation: fadeIn 1.5s ease;
+}
 
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      padding: 30px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
-      max-width: 350px;
-      width: 90%;
-      text-align: center;
-    }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-    h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
-      text-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff;
-    }
+h2 {
+  font-size: 1.6rem;
+  margin-bottom: 5px;
+  text-shadow: 0 0 10px #00f7ff;
+}
 
-    h6 {
-      color: #eee;
-      margin-bottom: 20px;
-    }
+h3 {
+  font-size: 1.1rem;
+  margin-top: 0;
+  margin-bottom: 25px;
+  color: #eee;
+}
 
-    .input-container {
-      display: flex;
-      width: 100%;
-      background: #ffffff80;
-      border-radius: 1rem;
-      padding: 5px;
-      gap: 5px;
-    }
+.input-container {
+  display: flex;
+  width: 100%;
+  background: #ffffff80;
+  border-radius: 1rem;
+  padding: 5px;
+  gap: 5px;
+}
 
-    .input-container input {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      border-radius: 0.8rem 0 0 0.8rem;
-      font-size: 16px;
-    }
+.input-container input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 0.8rem 0 0 0.8rem;
+  font-size: 16px;
+}
 
-    .input-container button {
-      background: linear-gradient(135deg, #1E90FF, #00CED1);
-      border: none;
-      padding: 10px 15px;
-      border-radius: 0 0.8rem 0.8rem 0;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+.input-container button {
+  background: linear-gradient(135deg, #1E90FF, #00CED1);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 0 0.8rem 0.8rem 0;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
-    .input-container button:hover {
-      background: linear-gradient(135deg, #00FFCB, #0099FF);
-    }
+.input-container button:hover {
+  background: linear-gradient(135deg, #00FFCB, #0099FF);
+}
 
-    .code-box {
-      margin-top: 20px;
-      padding: 15px;
-      background: #00000090;
-      border-radius: 10px;
-      color: #0ff;
-      font-weight: bold;
-      font-size: 20px;
-      box-shadow: 0 0 15px #0ff;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+.code-box {
+  margin-top: 20px;
+  padding: 15px;
+  background: #00000090;
+  border-radius: 10px;
+  color: #0ff;
+  font-weight: bold;
+  font-size: 20px;
+  box-shadow: 0 0 15px #0ff;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-    .code-box:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px #0ff, 0 0 40px #00f7ff;
-    }
+.code-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #0ff, 0 0 40px #00f7ff;
+}
 
-    .glowing-text {
-      margin-top: 25px;
-      font-size: 1.2rem;
-      color: white;
-      text-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
-      animation: glow 2s infinite;
-    }
+.glowing-text {
+  margin-top: 25px;
+  font-size: 1.2rem;
+  color: white;
+  text-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
+  animation: glow 2s infinite;
+}
 
-    @keyframes glow {
-      0%, 100% { text-shadow: 0 0 5px #00f7ff, 0 0 15px #00f7ff; }
-      50% { text-shadow: 0 0 10px #00ffcc, 0 0 25px #00ffcc; }
-    }
+@keyframes glow {
+  0%, 100% { text-shadow: 0 0 5px #00f7ff, 0 0 15px #00f7ff; }
+  50% { text-shadow: 0 0 10px #00ffcc, 0 0 25px #00ffcc; }
+}
+
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>INCONNU BOY TECH PAIR</h2>
-    <h6>Enter your number with country code</h6>
+    <h2 id="greeting">WELCOME TO INCONNU XD PAIR</h2>
+    <h3>Enter your number with country code</h3>
     <div class="input-container">
       <input id="number" type="number" placeholder="e.g. 554XXXXXX" />
-      <button id="submit">Enter</button>
+      <button id="submit">GET CODE</button>
     </div>
     <div id="pair"></div>
-    <div class="glowing-text">POWERED BY INCONNU BOY</div>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
-  <script>
+    <div class="glowing-text">POWERED BY INCONNU BOY TECH</div>
+  </div>  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>  <script>
     const pairBox = document.getElementById("pair");
     const submitBtn = document.getElementById("submit");
     const numberInput = document.getElementById("number");
+    const greeting = document.getElementById("greeting");
+
+    const username = localStorage.getItem("username");
+    if (username) greeting.innerText = `WELCOME ${username.toUpperCase()} TO INCONNU XD PAIR`;
 
     async function copyCode(code) {
       await navigator.clipboard.writeText(code);
@@ -132,7 +139,6 @@
       box.innerHTML = "CODE COPIED!";
       box.style.color = "#00ffcc";
       box.style.boxShadow = "0 0 30px #00ffcc";
-
       setTimeout(() => {
         box.innerHTML = "CODE: " + code;
         box.style.color = "#0ff";
@@ -142,7 +148,6 @@
 
     submitBtn.addEventListener("click", async () => {
       const value = numberInput.value.replace(/[^0-9]/g, "");
-
       if (!value || value.length < 11) {
         pairBox.innerHTML = `<div class="code-box" style="color:red;">Invalid number format.</div>`;
         return;
@@ -159,6 +164,5 @@
         pairBox.innerHTML = `<div class="code-box" style="color:red;">Error retrieving code.</div>`;
       }
     });
-  </script>
-</body>
+  </script></body>
 </html>

@@ -1,11 +1,15 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>INCONNU PORTAL</title>
   <link rel="icon" href="https://files.catbox.moe/c6g5ui.jpg" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
     body {
       height: 100vh;
       background: linear-gradient(135deg, #1a1a40, #2e2ecf, #ff00cc);
@@ -18,15 +22,18 @@
       position: relative;
       color: #fff;
     }
+
     @keyframes rainbowBG {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
     .overlay {
       position: absolute; top: 0; left: 0; height: 100%; width: 100%;
       background-color: rgba(0, 0, 0, 0.5); z-index: 1;
     }
+
     .container {
       position: relative;
       z-index: 2;
@@ -41,17 +48,32 @@
       max-width: 550px;
       animation: fadeIn 2s ease;
     }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
+
     h1 {
       font-size: 28px;
       margin-bottom: 25px;
       text-shadow: 0 0 15px #00ffff;
       font-weight: bold;
     }
-    .button, .confirm, .like-btn {
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 15px 0;
+      border-radius: 8px;
+      border: none;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .button, .confirm {
       display: block;
       width: 100%;
       padding: 14px;
@@ -67,28 +89,21 @@
       transition: transform 0.3s ease;
       cursor: pointer;
     }
-    .button:hover, .confirm:hover, .like-btn:hover {
+
+    .button:hover, .confirm:hover {
       transform: scale(1.05);
       box-shadow: 0 0 15px #ffffff77;
     }
+
     @keyframes pulse {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 15px 0;
-      border-radius: 8px;
-      border: none;
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-      outline: none;
-      font-size: 16px;
-    }
+
     .hidden { display: none; opacity: 0; transition: opacity 0.5s ease; }
     .visible { display: block; opacity: 1; }
+
     .logo {
       width: 120px;
       height: 120px;
@@ -96,6 +111,18 @@
       margin: 0 auto 20px auto;
       animation: logoFade 3s ease forwards;
     }
+
+    @keyframes logoFade {
+      0% { opacity: 0; transform: scale(0); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    #stats {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #fff;
+    }
+
     footer {
       position: absolute;
       bottom: 15px;
@@ -105,99 +132,57 @@
       color: #ccc;
       z-index: 2;
     }
-    #stats {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #fff;
-    }
-    .like-btn.liked {
-      background: linear-gradient(135deg, #00ffcc, #00ff99, #00ccff);
-    }
-    @keyframes logoFade {
-      0% { opacity: 0; transform: scale(0); }
-      100% { opacity: 1; transform: scale(1); }
-    }
   </style>
 </head>
 <body>
   <div class="overlay"></div>
   <div class="container">
     <img class="logo" src="https://files.catbox.moe/c6g5ui.jpg" alt="INCONNU LOGO" />
-    <h1>WELCOME TO INCONNU TECH BOT SESSION</h1><div id="nameSection">
-  <input type="text" id="username" placeholder="Enter your name..." />
-  <button class="confirm" onclick="confirmName()">CONFIRM</button>
-</div>
+    <h1>WELCOME TO INCONNU TECH BOT SESSION</h1>
 
-<div id="buttonSection" class="hidden">
-  <a href="/pair" class="button" target="_blank">PAIRING-CODE</a>
-  <a href="/qr" class="button" target="_blank">QR-CODE</a>
-  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" class="button" target="_blank">FORK INCONNU-XD-V1</a>
-  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" class="button" target="_blank">FORK INCONNU-XD-V2</a>
-  <a href="https://github.com/INCONNU-BOY/QUEEN-ASUNA-MD/fork" class="button" target="_blank">FORK QUEEN-ASUNA-MD</a>
-  <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" class="button" target="_blank">WHATSAPP</a>
-</div>
+    <div id="nameSection">
+      <input type="text" id="username" placeholder="Enter your name..." />
+      <button class="confirm" onclick="confirmName()">CONFIRM</button>
+    </div>
 
-<button id="likeBtn" class="like-btn">👍 LIKE</button>
-<div id="stats">Views: <span id="viewCount">0</span> • Likes: <span id="likeCount">0</span></div>
+    <div id="buttonSection" class="hidden">
+      <a href="/pair" class="button" target="_blank">PAIRING-CODE</a>
+      <a href="/qr" class="button" target="_blank">QR-CODE</a>
+      <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" class="button" target="_blank">FORK INCONNU-XD-V1</a>
+      <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" class="button" target="_blank">FORK INCONNU-XD-V2</a>
+      <a href="https://github.com/INCONNU-BOY/QUEEN-ASUNA-MD/fork" class="button" target="_blank">FORK QUEEN-ASUNA-MD</a>
+      <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" class="button" target="_blank">WHATSAPP</a>
+    </div>
 
-  </div>  <footer>
+    <div id="stats">👀 Views: <span id="viewCount">0</span></div>
+  </div>
+
+  <footer>
     POWERED BY INCONNU BOYTECH &copy; <span id="currentYear"></span>
-  </footer>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js"></script>  <script>
+  </footer>
+
+  <script>
     document.getElementById("currentYear").textContent = new Date().getFullYear();
 
-    const firebaseConfig = {
-      apiKey: "TA_CLE",
-      authDomain: "butterfly-quizzz.firebaseapp.com",
-      databaseURL: "https://butterfly-quizzz-default-rtdb.firebaseio.com",
-      projectId: "butterfly-quizzz",
-      storageBucket: "butterfly-quizzz.appspot.com",
-      messagingSenderId: "XXXXXXXXXX",
-      appId: "XXXXXXXXXX"
-    };
-
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-
     const viewCount = document.getElementById("viewCount");
-    const likeCount = document.getElementById("likeCount");
-    const likeBtn = document.getElementById("likeBtn");
 
-    const viewsRef = db.ref("portal/views");
-    const likesRef = db.ref("portal/likes");
-
-    // Mettre à jour vues
-    viewsRef.transaction(current => (current || 0) + 1);
-    viewsRef.on("value", snap => {
-      viewCount.innerText = snap.val() || 0;
-    });
-
-    // Affiche les likes en temps réel
-    likesRef.on("value", snap => {
-      likeCount.innerText = snap.val() || 0;
-    });
-
-    // Bouton Like
-    likeBtn.addEventListener("click", async () => {
-      const alreadyLiked = localStorage.getItem("liked");
-      if (!alreadyLiked) {
-        await likesRef.transaction(current => (current || 0) + 1);
-        localStorage.setItem("liked", "true");
-        likeBtn.classList.add("liked");
-        likeBtn.innerText = "💙 LIKED";
-        likeBtn.style.display = "none";
-      }
-    });
+    // Gérer les vues stockées en local
+    let views = parseInt(localStorage.getItem("views") || 0);
+    views++;
+    localStorage.setItem("views", views);
+    viewCount.innerText = views;
 
     function confirmName() {
       const name = document.getElementById("username").value.trim();
       if (name.length > 0) {
         localStorage.setItem("username", name);
-        document.getElementById("nameSection").style.display = "none";
+        document.getElementById("nameSection").classList.add("hidden");
         document.getElementById("buttonSection").classList.remove("hidden");
         document.getElementById("buttonSection").classList.add("visible");
       } else {
         alert("Please enter a valid name.");
       }
     }
-  </script></body>
+  </script>
+</body>
 </html>

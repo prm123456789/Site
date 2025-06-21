@@ -11,12 +11,18 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      background-image: url("https://files.catbox.moe/c6g5ui.jpg");
-      background-repeat: no-repeat;
-      background-size: cover;
+      background: linear-gradient(135deg, #001f3f, #0074D9, #7FDBFF);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
       font-family: 'Segoe UI', sans-serif;
       color: white;
-    }.container {
+    }@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,21 +38,20 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 h2 {
-  font-size: 1.6rem;
-  margin-bottom: 5px;
-  text-shadow: 0 0 10px #00f7ff;
+  font-size: 22px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff;
+  animation: fadeIn 2s ease;
 }
 
-h3 {
-  font-size: 1.1rem;
-  margin-top: 0;
-  margin-bottom: 25px;
+h6 {
   color: #eee;
+  margin-bottom: 20px;
 }
 
 .input-container {
@@ -117,10 +122,10 @@ h3 {
 <body>
   <div class="container">
     <h2 id="greeting">WELCOME TO INCONNU XD PAIR</h2>
-    <h3>Enter your number with country code</h3>
+    <h6>Enter your number with country code</h6>
     <div class="input-container">
       <input id="number" type="number" placeholder="e.g. 554XXXXXX" />
-      <button id="submit">GET CODE</button>
+      <button id="submit">Enter</button>
     </div>
     <div id="pair"></div>
     <div class="glowing-text">POWERED BY INCONNU BOY TECH</div>
@@ -130,8 +135,11 @@ h3 {
     const numberInput = document.getElementById("number");
     const greeting = document.getElementById("greeting");
 
+    // Load name from localStorage
     const username = localStorage.getItem("username");
-    if (username) greeting.innerText = `WELCOME ${username.toUpperCase()} TO INCONNU XD PAIR`;
+    if (username) {
+      greeting.innerText = `${username.toUpperCase()} WELCOME TO INCONNU XD PAIR`;
+    }
 
     async function copyCode(code) {
       await navigator.clipboard.writeText(code);
@@ -139,6 +147,7 @@ h3 {
       box.innerHTML = "CODE COPIED!";
       box.style.color = "#00ffcc";
       box.style.boxShadow = "0 0 30px #00ffcc";
+
       setTimeout(() => {
         box.innerHTML = "CODE: " + code;
         box.style.color = "#0ff";
@@ -148,6 +157,7 @@ h3 {
 
     submitBtn.addEventListener("click", async () => {
       const value = numberInput.value.replace(/[^0-9]/g, "");
+
       if (!value || value.length < 11) {
         pairBox.innerHTML = `<div class="code-box" style="color:red;">Invalid number format.</div>`;
         return;

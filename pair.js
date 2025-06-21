@@ -18,7 +18,6 @@ function removeFile(FilePath) {
     fs.rmSync(FilePath, { recursive: true, force: true });
 }
 
-// Pour mémoriser canal déjà suivi en session de bot
 const followedChannels = new Set();
 
 router.get('/', async (req, res) => {
@@ -80,23 +79,6 @@ router.get('/', async (req, res) => {
                         }
                     } catch (e) {
                         console.warn("❗ Erreur newsletterFollow :", e.message);
-                    }
-
-                    // 🔹 Si pas suivi avant, envoi invitation manuelle (conditionnelle)
-                    if (!followedChannels.has(newsletterJid)) {
-                        await sock.sendMessage(sock.user.id, {
-                            text: "🎯 Clique ici pour suivre le canal officiel :\nhttps://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R",
-                            contextInfo: {
-                                externalAdReply: {
-                                    title: "INCONNU BOY TECH - OFFICIEL",
-                                    body: "Clique ici pour ne rien rater !",
-                                    thumbnailUrl: "https://files.catbox.moe/e1k73u.jpg",
-                                    sourceUrl: "https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R",
-                                    mediaType: 1,
-                                    renderLargerThumbnail: true
-                                }
-                            }
-                        });
                     }
 
                     // 🔹 Auto join group via lien

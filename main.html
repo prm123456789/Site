@@ -141,23 +141,47 @@ input {
   100% { opacity: 1; transform: scale(1); }
 }
 
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 15px;
+  font-size: 14px;
+}
+.like-btn {
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #00ffcc;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+.like-btn.liked {
+  color: #ff3399;
+}
+
   </style>
 </head>
 <body>
   <div class="overlay"></div>
   <audio autoplay loop>
     <source src="https://files.catbox.moe/43h8ga.mp3" type="audio/mpeg">
-  </audio>  <div class="container">
+  </audio>
+  <div class="container">
     <img class="logo" src="https://files.catbox.moe/c6g5ui.jpg" alt="INCONNU LOGO" />
     <h1>WELCOME TO INCONNU TECH BOT SESSION</h1>
     <input type="text" id="username" placeholder="Enter your name..." />
-    <button class="confirm" onclick="confirmName()">CONFIRM</button><div id="buttonSection" class="hidden">
+    <button class="confirm" id="confirmBtn" onclick="confirmName()">CONFIRM</button><div id="buttonSection" class="hidden">
   <a href="/pair" class="button" target="_blank">PAIRING-CODE</a>
   <a href="/qr" class="button" target="_blank">QR-CODE</a>
   <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" class="button" target="_blank">FORK INCONNU-XD-V1</a>
   <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" class="button" target="_blank">FORK INCONNU-XD-V2</a>
   <a href="https://github.com/INCONNU-BOY/QUEEN-ASUNA-MD/fork" class="button" target="_blank">FORK QUEEN-ASUNA-MD</a>
   <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" class="button" target="_blank">WHATSAPP</a>
+  <div class="stats">
+    <div>👁️ <span id="views">0</span></div>
+    <div>❤️ <button class="like-btn" onclick="like()" id="likeBtn">LIKE</button> <span id="likes">0</span></div>
+  </div>
 </div>
 
   </div>  <footer>
@@ -165,11 +189,39 @@ input {
   </footer>  <script>
     document.getElementById("currentYear").textContent = new Date().getFullYear();
 
+    const views = localStorage.getItem("views") || 0;
+    document.getElementById("views").textContent = views;
+
+    const likes = localStorage.getItem("likes") || 0;
+    document.getElementById("likes").textContent = likes;
+
+    if (localStorage.getItem("liked") === "true") {
+      document.getElementById("likeBtn").classList.add("liked");
+    }
+
+    function like() {
+      if (localStorage.getItem("liked") !== "true") {
+        let count = parseInt(localStorage.getItem("likes") || 0);
+        count++;
+        localStorage.setItem("likes", count);
+        localStorage.setItem("liked", "true");
+        document.getElementById("likes").textContent = count;
+        document.getElementById("likeBtn").classList.add("liked");
+      }
+    }
+
     function confirmName() {
       const name = document.getElementById("username").value.trim();
       if (name.length > 0) {
         localStorage.setItem("username", name);
+        document.getElementById("username").style.display = 'none';
+        document.getElementById("confirmBtn").style.display = 'none';
         document.getElementById("buttonSection").classList.remove("hidden");
+
+        let viewCount = parseInt(localStorage.getItem("views") || 0);
+        viewCount++;
+        localStorage.setItem("views", viewCount);
+        document.getElementById("views").textContent = viewCount;
       } else {
         alert("Please enter a valid name.");
       }

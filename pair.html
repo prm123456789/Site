@@ -11,18 +11,11 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      background: linear-gradient(135deg, #001f3f, #0074D9, #7FDBFF);
-      background-size: 400% 400%;
-      animation: gradientMove 15s ease infinite;
+      background: url("https://files.catbox.moe/c6g5ui.jpg") no-repeat center center fixed;
+      background-size: cover;
       font-family: 'Segoe UI', sans-serif;
       color: white;
-    }@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.container {
+    }.container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -123,7 +116,7 @@ h6 {
   <div class="container">
     <h2 id="greeting">WELCOME TO INCONNU XD PAIR</h2>
     <h6>Enter your number with country code</h6>
-    <div class="input-container">
+    <div class="input-container" id="inputSection">
       <input id="number" type="number" placeholder="e.g. 554XXXXXX" />
       <button id="submit">Enter</button>
     </div>
@@ -134,6 +127,7 @@ h6 {
     const submitBtn = document.getElementById("submit");
     const numberInput = document.getElementById("number");
     const greeting = document.getElementById("greeting");
+    const inputSection = document.getElementById("inputSection");
 
     // Load name from localStorage
     const username = localStorage.getItem("username");
@@ -159,19 +153,21 @@ h6 {
       const value = numberInput.value.replace(/[^0-9]/g, "");
 
       if (!value || value.length < 11) {
-        pairBox.innerHTML = `<div class="code-box" style="color:red;">Invalid number format.</div>`;
+        pairBox.innerHTML = `<div class='code-box' style='color:red;'>Invalid number format.</div>`;
         return;
       }
 
       numberInput.value = "+" + value;
-      pairBox.innerHTML = `<div class="code-box">Generating code...</div>`;
+      pairBox.innerHTML = `<div class='code-box'>Generating code...</div>`;
+      inputSection.style.display = "none";
 
       try {
         const { data } = await axios(`/code?number=${value}`);
         const code = data.code || "Unavailable";
         pairBox.innerHTML = `<div class="code-box" id="copyBox" onclick="copyCode('${code}')">CODE: ${code}</div>`;
       } catch (err) {
-        pairBox.innerHTML = `<div class="code-box" style="color:red;">Error retrieving code.</div>`;
+        pairBox.innerHTML = `<div class='code-box' style='color:red;'>Error retrieving code.</div>`;
+        inputSection.style.display = "flex";
       }
     });
   </script></body>

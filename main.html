@@ -6,96 +6,15 @@
   <title>INCONNU PORTAL</title>
   <link rel="icon" href="https://files.catbox.moe/c6g5ui.jpg" />
   <style>
-    body, html {
-      margin: 0; padding: 0;
-      width: 100%; height: 100%;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      color: white;
-      background: black;
-    }
-    /* Intro CD Loading */
-    #introScreen {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      animation: fadeOut 1s ease forwards;
-      animation-delay: 5s;
-    }
-    #introCD {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      background-image: url('https://files.catbox.moe/c6g5ui.jpg');
-      background-size: cover;
-      animation: spin 5s linear infinite;
-      margin-bottom: 20px;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    @keyframes fadeOut {
-      to { opacity: 0; visibility: hidden; }
-    }
-
-    /* Fullscreen Name Section */
-    #nameScreen {
-      display: none;
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: radial-gradient(circle, #1a1a40, #000);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-    #nameScreen img {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      margin-bottom: 20px;
-    }
-    #username {
-      width: 80%;
-      max-width: 300px;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      background: rgba(255,255,255,0.2);
-      color: white;
-      text-align: center;
-      font-size: 16px;
-    }
-    #nameScreen button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      background: #00ffff;
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* Main Container */
-    .container {
-      display: none;
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body {
+      height: 100vh;
       background: linear-gradient(135deg, #1a1a40, #2e2ecf, #ff00cc);
       background-size: 400% 400%;
       animation: rainbowBG 15s ease infinite;
-      padding: 20px;
-      box-sizing: border-box;
-      overflow-y: auto;
+      overflow: hidden;
+      position: relative;
+      color: #fff;
     }
     @keyframes rainbowBG {
       0% { background-position: 0% 50%; }
@@ -103,116 +22,136 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Button Zones */
-    .button-zone {
-      position: absolute;
+    /* --- Intro Loading CD --- */
+    #introScreen {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: black; display: flex; justify-content: center; align-items: center; flex-direction: column;
+      animation: fadeOut 1s ease forwards; animation-delay: 5s;
+      z-index: 10;
     }
-    #topButton { top: 20px; left: 50%; transform: translateX(-50%); }
-    #leftButton { top: 50%; left: 20px; transform: translateY(-50%); }
-    #rightButton { top: 50%; right: 20px; transform: translateY(-50%); }
-    #bottomButton { bottom: 20px; left: 50%; transform: translateX(-50%); }
-    .button-zone button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #ff0040, #ff9900, #00ffff);
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      margin: 5px;
-      box-shadow: 0 0 10px #000;
+    #introCD {
+      width: 120px; height: 120px; border-radius: 50%;
+      background-image: url('https://files.catbox.moe/c6g5ui.jpg');
+      background-size: cover;
+      animation: spin 3s linear infinite;
+      margin-bottom: 20px;
     }
-    .button-zone button:hover {
-      transform: scale(1.1);
+    @keyframes spin { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
+    @keyframes fadeOut { to {opacity: 0; visibility: hidden;} }
+
+    /* --- Fullscreen Name Input --- */
+    #nameSection {
+      display: none;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex; justify-content: center; align-items: center; flex-direction: column;
+    }
+    #nameSection img {
+      width: 120px; height: 120px; border-radius: 50%; margin-bottom: 15px;
+    }
+    #username {
+      padding: 12px; border-radius: 8px; border: none;
+      width: 80%; max-width: 300px;
+      background: rgba(255,255,255,0.2);
+      color: white; font-size: 16px; text-align: center;
+    }
+    #nameSection button {
+      margin-top: 10px; padding: 10px 20px; border: none; border-radius: 8px;
+      background: #00ffff; color: black; font-weight: bold; cursor: pointer;
     }
 
-    /* Comments */
+    /* --- Main container --- */
+    .container {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid #ffffff20;
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+      width: 90%; max-width: 550px;
+      margin: 50px auto;
+      display: none;
+    }
+
+    /* --- Buttons multiple directions --- */
+    .button { display: inline-block; padding: 12px; margin: 10px; border-radius: 10px;
+      font-weight: bold; cursor: pointer; text-decoration: none; color: white; }
+    .topBtn { background: #ff0040; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); }
+    .leftBtn { background: #00ffff; position: absolute; top: 50%; left: 20px; transform: translateY(-50%); }
+    .rightBtn { background: #ff9900; position: absolute; top: 50%; right: 20px; transform: translateY(-50%); }
+    .bottomBtn { background: #ff00ff; position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); }
+
+    /* --- Comments Section --- */
     #commentsSection {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90%;
-      max-width: 500px;
+      position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+      width: 90%; max-width: 500px;
       background: rgba(0,0,0,0.6);
-      border-radius: 8px;
-      padding: 10px;
-      overflow-y: auto;
-      max-height: 200px;
+      border-radius: 8px; padding: 10px;
+      overflow-y: auto; max-height: 200px; font-size: 14px;
     }
-    #commentsSection p {
-      margin: 5px 0;
-      font-size: 14px;
-    }
+    #commentsBox p { margin: 5px 0; }
     #commentInput {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border-radius: 6px;
-      border: none;
+      width: 100%; padding: 8px; margin-top: 5px; border-radius: 6px; border: none;
     }
     #sendCommentBtn {
-      width: 100%;
-      margin-top: 5px;
-      padding: 8px;
-      background: #00ff99;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      color: black;
-      font-weight: bold;
+      width: 100%; margin-top: 5px; padding: 8px; background: #00ff99;
+      border: none; border-radius: 6px; cursor: pointer; color: black; font-weight: bold;
+    }
+
+    footer {
+      position: absolute; bottom: 10px; width: 100%; text-align: center; font-size: 12px; color: #ccc;
     }
   </style>
 </head>
 <body>
 
-<!-- Intro Screen -->
+<!-- Intro Loading -->
 <div id="introScreen">
   <div id="introCD"></div>
-  <div style="font-size:18px;">LOADING...</div>
+  <div>LOADING...</div>
 </div>
 
-<!-- Name Screen -->
-<div id="nameScreen">
+<!-- Name Input Screen -->
+<div id="nameSection">
   <img src="https://files.catbox.moe/c6g5ui.jpg" alt="CD Image">
   <input type="text" id="username" placeholder="Enter your name...">
-  <button onclick="confirmName()">Confirm Name</button>
+  <button onclick="confirmName()">CONFIRM</button>
 </div>
 
-<!-- Main Container -->
+<!-- Main Content -->
 <div class="container" id="mainContent">
   <audio id="bgMusic" loop>
     <source src="https://files.catbox.moe/occtjs.mp3" type="audio/mpeg">
     <source src="https://files.catbox.moe/ndp6ep.m4a" type="audio/mp4">
   </audio>
 
-  <div class="button-zone" id="topButton">
-    <a href="/pair" target="_blank"><button>PAIRING-CODE</button></a>
-  </div>
-  <div class="button-zone" id="leftButton">
-    <a href="/qr" target="_blank"><button>QR-CODE</button></a>
-  </div>
-  <div class="button-zone" id="rightButton">
-    <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" target="_blank"><button>FORK-XD-V1</button></a>
-  </div>
-  <div class="button-zone" id="bottomButton">
-    <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank"><button>WHATSAPP</button></a>
-  </div>
+  <h1>WELCOME TO INCONNU TECH BOT SESSION</h1>
 
-  <!-- Comments -->
+  <a href="/pair" target="_blank" class="button topBtn">PAIRING-CODE</a>
+  <a href="/qr" target="_blank" class="button leftBtn">QR-CODE</a>
+  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" target="_blank" class="button rightBtn">FORK XD V1</a>
+  <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="button bottomBtn">WHATSAPP</a>
+
   <div id="commentsSection">
     <div id="commentsBox"></div>
-    <input type="text" id="commentInput" placeholder="Your comment...">
+    <input type="text" id="commentInput" placeholder="Write a comment...">
     <button id="sendCommentBtn" onclick="sendComment()">Send</button>
   </div>
 </div>
 
+<footer>POWERED BY INCONNU BOYTECH © <span id="currentYear"></span></footer>
+
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  // Handle screen transitions
+  document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+  // Intro timer
   setTimeout(() => {
     document.getElementById('introScreen').style.display = 'none';
-    document.getElementById('nameScreen').style.display = 'flex';
+    document.getElementById('nameSection').style.display = 'flex';
   }, 5000);
 
   const socket = io();
@@ -248,7 +187,7 @@
     const name = document.getElementById('username').value.trim();
     if (name) {
       localStorage.setItem('username', name);
-      document.getElementById('nameScreen').style.display = 'none';
+      document.getElementById('nameSection').style.display = 'none';
       document.getElementById('mainContent').style.display = 'block';
       document.getElementById('bgMusic').play();
     } else {

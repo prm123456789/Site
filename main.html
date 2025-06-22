@@ -22,7 +22,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* --- Intro Loading CD --- */
+    /* Intro CD Loading */
     #introScreen {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: black; display: flex; justify-content: center; align-items: center; flex-direction: column;
@@ -39,7 +39,7 @@
     @keyframes spin { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
     @keyframes fadeOut { to {opacity: 0; visibility: hidden;} }
 
-    /* --- Fullscreen Name Input --- */
+    /* Name Input */
     #nameSection {
       display: none;
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -60,7 +60,7 @@
       background: #00ffff; color: black; font-weight: bold; cursor: pointer;
     }
 
-    /* --- Main container --- */
+    /* Main container */
     .container {
       position: relative;
       z-index: 2;
@@ -76,15 +76,25 @@
       display: none;
     }
 
-    /* --- Buttons multiple directions --- */
-    .button { display: inline-block; padding: 12px; margin: 10px; border-radius: 10px;
-      font-weight: bold; cursor: pointer; text-decoration: none; color: white; }
-    .topBtn { background: #ff0040; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); }
-    .leftBtn { background: #00ffff; position: absolute; top: 50%; left: 20px; transform: translateY(-50%); }
-    .rightBtn { background: #ff9900; position: absolute; top: 50%; right: 20px; transform: translateY(-50%); }
-    .bottomBtn { background: #ff00ff; position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); }
+    /* Buttons in 4 corners */
+    .btn {
+      position: absolute;
+      padding: 12px 16px;
+      background: linear-gradient(135deg, #ff0040, #ff9900, #00ffff);
+      background-size: 300%;
+      border-radius: 10px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.2s;
+    }
+    .btn:hover { transform: scale(1.1); }
+    #topBtn { top: 20px; left: 50%; transform: translateX(-50%); }
+    #leftBtn { left: 20px; top: 50%; transform: translateY(-50%); }
+    #rightBtn { right: 20px; top: 50%; transform: translateY(-50%); }
+    #bottomBtn { bottom: 20px; left: 50%; transform: translateX(-50%); }
 
-    /* --- Comments Section --- */
+    /* Comments Section */
     #commentsSection {
       position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
       width: 90%; max-width: 500px;
@@ -130,15 +140,15 @@
 
   <h1>WELCOME TO INCONNU TECH BOT SESSION</h1>
 
-  <a href="/pair" target="_blank" class="button topBtn">PAIRING-CODE</a>
-  <a href="/qr" target="_blank" class="button leftBtn">QR-CODE</a>
-  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" target="_blank" class="button rightBtn">FORK XD V1</a>
-  <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="button bottomBtn">WHATSAPP</a>
+  <a href="/pair" target="_blank" class="btn" id="topBtn">PAIRING-CODE</a>
+  <a href="/qr" target="_blank" class="btn" id="leftBtn">QR-CODE</a>
+  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" target="_blank" class="btn" id="rightBtn">FORK-XD-V1</a>
+  <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="btn" id="bottomBtn">WHATSAPP</a>
 
   <div id="commentsSection">
     <div id="commentsBox"></div>
     <input type="text" id="commentInput" placeholder="Write a comment...">
-    <button id="sendCommentBtn" onclick="sendComment()">Send</button>
+    <button id="sendCommentBtn">Send</button>
   </div>
 </div>
 
@@ -148,13 +158,20 @@
 <script>
   document.getElementById("currentYear").textContent = new Date().getFullYear();
 
-  // Intro timer
   setTimeout(() => {
     document.getElementById('introScreen').style.display = 'none';
     document.getElementById('nameSection').style.display = 'flex';
   }, 5000);
 
   const socket = io();
+
+  function appendComment(username, comment) {
+    const box = document.getElementById('commentsBox');
+    const p = document.createElement('p');
+    p.textContent = username + ": " + comment;
+    box.appendChild(p);
+    box.scrollTop = box.scrollHeight;
+  }
 
   socket.on('loadComments', (data) => {
     const box = document.getElementById('commentsBox');
@@ -166,22 +183,14 @@
     appendComment(data.username, data.comment);
   });
 
-  function appendComment(username, comment) {
-    const box = document.getElementById('commentsBox');
-    const p = document.createElement('p');
-    p.textContent = username + ": " + comment;
-    box.appendChild(p);
-    box.scrollTop = box.scrollHeight;
-  }
-
-  function sendComment() {
+  document.getElementById('sendCommentBtn').addEventListener('click', () => {
     const username = localStorage.getItem('username') || 'Anonymous';
     const comment = document.getElementById('commentInput').value.trim();
     if (comment.length > 0) {
       socket.emit('newComment', { username, comment });
       document.getElementById('commentInput').value = '';
     }
-  }
+  });
 
   function confirmName() {
     const name = document.getElementById('username').value.trim();
@@ -190,6 +199,7 @@
       document.getElementById('nameSection').style.display = 'none';
       document.getElementById('mainContent').style.display = 'block';
       document.getElementById('bgMusic').play();
+      socket.emit('requestComments');
     } else {
       alert('Please enter your name.');
     }

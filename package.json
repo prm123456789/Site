@@ -1,15 +1,15 @@
 {
   "name": "web-pair",
   "version": "0.0.1",
-  "description": "A multi functional whatsapp bot Web paircode.",
+  "description": "A multi-functional WhatsApp bot Web paircode.",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start index.js --deep-monitoring --attach --name megalodon-md",
-    "stop": "pm2 stop megalodon-md",
-    "restart": "pm2 restart megalodon-md"
+    "start": "pm2 start index.js --deep-monitoring --attach --name inconnu-boy",
+    "stop": "pm2 stop inconnu-boy",
+    "restart": "pm2 restart inconnu-boy"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "github:DybyTech/Baileys",
+    "@whiskeysockets/baileys": "^6.7.0",
     "@adiwajshing/keyed-db": "^0.2.4",
     "qrcode": "^1.5.3",
     "awesome-phonenumber": "^2.64.0",

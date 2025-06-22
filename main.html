@@ -2,15 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>INCONNU PORTAL</title>
   <link rel="icon" href="https://files.catbox.moe/c6g5ui.jpg" />
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
-    }
     body {
+      margin: 0; padding: 0;
       height: 100vh;
       background: linear-gradient(135deg, #1a1a40, #2e2ecf, #ff00cc);
       background-size: 400% 400%;
@@ -19,201 +16,144 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      position: relative;
-      color: #fff;
+      font-family: Arial, sans-serif;
+      color: white;
     }
     @keyframes rainbowBG {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    .overlay {
-      position: absolute; top: 0; left: 0; height: 100%; width: 100%;
-      background-color: rgba(0, 0, 0, 0.5); z-index: 1;
-    }
     .container {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      padding: 40px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid #ffffff20;
-      border-radius: 20px;
-      backdrop-filter: blur(15px);
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 500px;
       width: 90%;
-      max-width: 550px;
-      animation: fadeIn 2s ease;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
       overflow-y: auto;
       max-height: 90vh;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    h1, h2 {
-      font-size: 28px;
-      margin-bottom: 15px;
-      text-shadow: 0 0 15px #00ffff;
-      font-weight: bold;
-    }
     input, textarea {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: none;
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-      outline: none;
-      font-size: 16px;
-    }
-    .button, .confirm {
-      display: block;
-      width: 100%;
-      padding: 14px;
+      padding: 10px;
       margin: 8px 0;
-      color: #fff;
-      background: linear-gradient(135deg, #ff0040, #ff9900, #00ffff);
       border: none;
-      border-radius: 12px;
-      background-size: 300%;
-      animation: pulse 6s infinite linear;
-      font-weight: bold;
-      font-size: 16px;
-      transition: transform 0.3s ease;
-      cursor: pointer;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.2);
+      color: white;
     }
-    .button:hover, .confirm:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px #ffffff77;
-    }
-    @keyframes pulse {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    .hidden { display: none; }
-    .visible { display: block; }
-    .logo {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      margin: 0 auto 20px auto;
-      animation: logoFade 3s ease forwards;
-    }
-    @keyframes logoFade {
-      0% { opacity: 0; transform: scale(0); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-    #stats { margin-top: 10px; font-size: 14px; color: #fff; }
-    footer {
-      position: absolute;
-      bottom: 10px;
+    button {
+      padding: 10px;
       width: 100%;
-      text-align: center;
-      font-size: 13px;
-      color: #ccc;
-      z-index: 2;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #ff0040, #ff9900, #00ffff);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      transform: scale(1.05);
     }
     #commentsBox {
       max-height: 200px;
       overflow-y: auto;
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0,0,0,0.3);
       padding: 10px;
-      border-radius: 10px;
-      margin-bottom: 10px;
+      border-radius: 8px;
       text-align: left;
+      margin-top: 10px;
       font-size: 14px;
     }
     #commentsBox p {
       margin: 5px 0;
     }
+    footer {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #ccc;
+    }
   </style>
 </head>
 <body>
-  <div class="overlay"></div>
-  <audio id="bgMusic" loop>
-    <source src="https://files.catbox.moe/occtjs.mp3" type="audio/mpeg">
-    <source src="https://files.catbox.moe/ndp6ep.m4a" type="audio/mp4">
-  </audio>
+<audio id="bgMusic" loop>
+  <source src="https://files.catbox.moe/occtjs.mp3" type="audio/mpeg">
+  <source src="https://files.catbox.moe/ndp6ep.m4a" type="audio/mp4">
+</audio>
 
-  <div class="container">
-    <img class="logo" src="https://files.catbox.moe/c6g5ui.jpg" alt="INCONNU LOGO" />
-    <h1>WELCOME TO INCONNU TECH BOT SESSION</h1>
+<div class="container">
+  <h1>WELCOME TO INCONNU PORTAL</h1>
 
-    <div id="nameSection">
-      <input type="text" id="username" placeholder="Enter your name..." />
-      <button class="confirm" onclick="confirmName()">CONFIRM</button>
-    </div>
-
-    <div id="buttonSection" class="hidden">
-      <h2 id="welcomeUser"></h2>
-      <a href="/pair" class="button" target="_blank">PAIRING-CODE</a>
-      <a href="/qr" class="button" target="_blank">QR-CODE</a>
-      <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" class="button" target="_blank">FORK INCONNU-XD-V1</a>
-      <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" class="button" target="_blank">FORK INCONNU-XD-V2</a>
-      <a href="https://github.com/INCONNU-BOY/QUEEN-ASUNA-MD/fork" class="button" target="_blank">FORK QUEEN-ASUNA-MD</a>
-      <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" class="button" target="_blank">WHATSAPP</a>
-
-      <div id="commentsSection">
-        <h2>💬 Live Comments</h2>
-        <div id="commentsBox"></div>
-        <input type="text" id="commentInput" placeholder="Write a comment..."/>
-        <button class="confirm" onclick="sendComment()">Send Comment</button>
-      </div>
-    </div>
-
-    <div id="stats">👀 Views: <span id="viewCount">0</span></div>
+  <div id="nameSection">
+    <input type="text" id="username" placeholder="Enter your name...">
+    <button onclick="confirmName()">Confirm</button>
   </div>
 
-  <footer>
-    POWERED BY INCONNU BOYTECH &copy; <span id="currentYear"></span>
-  </footer>
+  <div id="mainSection" style="display:none;">
+    <h2 id="welcomeUser"></h2>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    document.getElementById("currentYear").textContent = new Date().getFullYear();
+    <a href="/pair" target="_blank"><button>PAIRING-CODE</button></a>
+    <a href="/qr" target="_blank"><button>QR-CODE</button></a>
+    <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" target="_blank"><button>FORK INCONNU-XD-V1</button></a>
+    <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" target="_blank"><button>FORK INCONNU-XD-V2</button></a>
+    <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank"><button>WHATSAPP</button></a>
 
-    // Views Counter (local)
-    const viewCount = document.getElementById("viewCount");
-    let views = parseInt(localStorage.getItem("views") || 0);
-    views++;
-    localStorage.setItem("views", views);
-    viewCount.innerText = views;
+    <h3>💬 Live Comments:</h3>
+    <div id="commentsBox"></div>
+    <input type="text" id="commentInput" placeholder="Write a comment...">
+    <button onclick="sendComment()">Send</button>
+  </div>
 
-    const socket = io();
+  <footer>&copy; INCONNU BOYTECH 2025</footer>
+</div>
 
-    function confirmName() {
-      const name = document.getElementById("username").value.trim();
-      if (name.length > 0) {
-        localStorage.setItem("username", name);
-        document.getElementById("nameSection").classList.add("hidden");
-        document.getElementById("buttonSection").classList.remove("hidden");
-        document.getElementById("buttonSection").classList.add("visible");
-        document.getElementById("welcomeUser").innerText = "Bienvenue, " + name + "!";
-        document.getElementById("bgMusic").play();
-      } else {
-        alert("Please enter a valid name.");
-      }
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  socket.on('loadComments', (data) => {
+    const box = document.getElementById('commentsBox');
+    box.innerHTML = "";
+    data.forEach(c => appendComment(c.username, c.comment));
+  });
+
+  socket.on('broadcastComment', (data) => {
+    appendComment(data.username, data.comment);
+  });
+
+  function appendComment(username, comment) {
+    const box = document.getElementById('commentsBox');
+    const p = document.createElement('p');
+    p.textContent = username + ": " + comment;
+    box.appendChild(p);
+    box.scrollTop = box.scrollHeight;
+  }
+
+  function sendComment() {
+    const username = localStorage.getItem('username') || 'Anonymous';
+    const comment = document.getElementById('commentInput').value.trim();
+    if (comment) {
+      socket.emit('newComment', { username, comment });
+      document.getElementById('commentInput').value = '';
     }
+  }
 
-    function sendComment() {
-      const username = localStorage.getItem("username") || "Anonymous";
-      const comment = document.getElementById("commentInput").value.trim();
-      if (comment.length > 0) {
-        socket.emit('newComment', { username, comment });
-        document.getElementById("commentInput").value = "";
-      }
+  function confirmName() {
+    const name = document.getElementById('username').value.trim();
+    if (name) {
+      localStorage.setItem('username', name);
+      document.getElementById('nameSection').style.display = 'none';
+      document.getElementById('mainSection').style.display = 'block';
+      document.getElementById('welcomeUser').textContent = "Bienvenue, " + name + "!";
+      document.getElementById('bgMusic').play();
+    } else {
+      alert('Please enter your name');
     }
-
-    socket.on('broadcastComment', (data) => {
-      const box = document.getElementById("commentsBox");
-      const p = document.createElement("p");
-      p.textContent = `${data.username}: ${data.comment}`;
-      box.appendChild(p);
-      box.scrollTop = box.scrollHeight;
-    });
-  </script>
+  }
+</script>
 </body>
 </html>

@@ -6,15 +6,16 @@
   <title>INCONNU PORTAL</title>
   <link rel="icon" href="https://files.catbox.moe/c6g5ui.jpg" />
   <style>
-    body {
+    body, html {
       margin: 0; padding: 0;
-      height: 100vh;
-      background: black;
-      color: white;
-      font-family: Arial, sans-serif;
+      width: 100%; height: 100%;
       overflow: hidden;
+      font-family: Arial, sans-serif;
+      color: white;
+      background: black;
     }
-    .intro {
+    /* Intro CD Loading */
+    #introScreen {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
@@ -23,22 +24,67 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      animation: fadeOut 3s ease forwards;
-      animation-delay: 4s;
+      animation: fadeOut 1s ease forwards;
+      animation-delay: 5s;
     }
-    .introText {
-      font-size: 24px;
-      opacity: 0;
-      animation: fadeIn 3s ease forwards;
+    #introCD {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-image: url('https://files.catbox.moe/c6g5ui.jpg');
+      background-size: cover;
+      animation: spin 5s linear infinite;
+      margin-bottom: 20px;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
     @keyframes fadeOut {
       to { opacity: 0; visibility: hidden; }
     }
 
+    /* Fullscreen Name Section */
+    #nameScreen {
+      display: none;
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle, #1a1a40, #000);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    #nameScreen img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+    #username {
+      width: 80%;
+      max-width: 300px;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      text-align: center;
+      font-size: 16px;
+    }
+    #nameScreen button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #00ffff;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Main Container */
     .container {
       display: none;
       position: absolute;
@@ -56,94 +102,118 @@
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 8px;
-      border: none;
-      background: rgba(255,255,255,0.2);
-      color: white;
+
+    /* Button Zones */
+    .button-zone {
+      position: absolute;
     }
-    button {
-      padding: 10px;
-      width: 100%;
+    #topButton { top: 20px; left: 50%; transform: translateX(-50%); }
+    #leftButton { top: 50%; left: 20px; transform: translateY(-50%); }
+    #rightButton { top: 50%; right: 20px; transform: translateY(-50%); }
+    #bottomButton { bottom: 20px; left: 50%; transform: translateX(-50%); }
+    .button-zone button {
+      padding: 10px 20px;
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       background: linear-gradient(135deg, #ff0040, #ff9900, #00ffff);
       color: white;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 8px;
+      margin: 5px;
+      box-shadow: 0 0 10px #000;
     }
-    button:hover {
-      transform: scale(1.05);
+    .button-zone button:hover {
+      transform: scale(1.1);
     }
-    .section {
-      margin-bottom: 20px;
-    }
-    #commentsBox {
-      max-height: 300px;
-      overflow-y: auto;
-      background: rgba(0,0,0,0.4);
-      padding: 10px;
+
+    /* Comments */
+    #commentsSection {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 500px;
+      background: rgba(0,0,0,0.6);
       border-radius: 8px;
+      padding: 10px;
+      overflow-y: auto;
+      max-height: 200px;
+    }
+    #commentsSection p {
+      margin: 5px 0;
       font-size: 14px;
     }
-    #commentsBox p {
-      margin: 5px 0;
+    #commentInput {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: none;
     }
-    footer {
-      margin-top: 15px;
-      text-align: center;
-      font-size: 12px;
-      color: #ccc;
+    #sendCommentBtn {
+      width: 100%;
+      margin-top: 5px;
+      padding: 8px;
+      background: #00ff99;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      color: black;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-<div class="intro" id="introScreen">
-  <div class="introText">INCONNU PORTAL... LOADING...</div>
+<!-- Intro Screen -->
+<div id="introScreen">
+  <div id="introCD"></div>
+  <div style="font-size:18px;">LOADING...</div>
 </div>
 
+<!-- Name Screen -->
+<div id="nameScreen">
+  <img src="https://files.catbox.moe/c6g5ui.jpg" alt="CD Image">
+  <input type="text" id="username" placeholder="Enter your name...">
+  <button onclick="confirmName()">Confirm Name</button>
+</div>
+
+<!-- Main Container -->
 <div class="container" id="mainContent">
   <audio id="bgMusic" loop>
     <source src="https://files.catbox.moe/occtjs.mp3" type="audio/mpeg">
     <source src="https://files.catbox.moe/ndp6ep.m4a" type="audio/mp4">
   </audio>
 
-  <div class="section" id="nameSection">
-    <input type="text" id="username" placeholder="Enter your name...">
-    <button onclick="confirmName()">Confirm Name</button>
-  </div>
-
-  <div class="section" id="buttonSection" style="display:none;">
-    <h2 id="welcomeUser"></h2>
+  <div class="button-zone" id="topButton">
     <a href="/pair" target="_blank"><button>PAIRING-CODE</button></a>
+  </div>
+  <div class="button-zone" id="leftButton">
     <a href="/qr" target="_blank"><button>QR-CODE</button></a>
-    <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" target="_blank"><button>FORK INCONNU-XD-V1</button></a>
-    <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" target="_blank"><button>FORK INCONNU-XD-V2</button></a>
+  </div>
+  <div class="button-zone" id="rightButton">
+    <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" target="_blank"><button>FORK-XD-V1</button></a>
+  </div>
+  <div class="button-zone" id="bottomButton">
     <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank"><button>WHATSAPP</button></a>
   </div>
 
-  <div class="section" id="commentsSection" style="display:none;">
-    <h3>💬 Live Comments:</h3>
+  <!-- Comments -->
+  <div id="commentsSection">
     <div id="commentsBox"></div>
-    <input type="text" id="commentInput" placeholder="Write a comment...">
-    <button onclick="sendComment()">Send Comment</button>
+    <input type="text" id="commentInput" placeholder="Your comment...">
+    <button id="sendCommentBtn" onclick="sendComment()">Send</button>
   </div>
-
-  <footer>&copy; INCONNU BOYTECH 2025</footer>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  // Intro Screen timer
+  // Handle screen transitions
   setTimeout(() => {
     document.getElementById('introScreen').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'block';
-  }, 7000); // 7 seconds intro
+    document.getElementById('nameScreen').style.display = 'flex';
+  }, 5000);
 
   const socket = io();
 
@@ -178,10 +248,8 @@
     const name = document.getElementById('username').value.trim();
     if (name) {
       localStorage.setItem('username', name);
-      document.getElementById('nameSection').style.display = 'none';
-      document.getElementById('buttonSection').style.display = 'block';
-      document.getElementById('commentsSection').style.display = 'block';
-      document.getElementById('welcomeUser').innerText = "Welcome, " + name + "!";
+      document.getElementById('nameScreen').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'block';
       document.getElementById('bgMusic').play();
     } else {
       alert('Please enter your name.');

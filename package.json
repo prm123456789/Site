@@ -9,7 +9,7 @@
     "restart": "pm2 restart megalodon-md"
   },
   "dependencies": {
-    "baileys-pro": "0.0.5",
+    "@whiskeysockets/baileys": "npm:baileys-pro@0.0.5",
     "@adiwajshing/keyed-db": "^0.2.4",
     "qrcode": "^1.5.3",
     "awesome-phonenumber": "^2.64.0",

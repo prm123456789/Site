@@ -22,18 +22,15 @@
       position: relative;
       color: #fff;
     }
-
     @keyframes rainbowBG {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     .overlay {
       position: absolute; top: 0; left: 0; height: 100%; width: 100%;
       background-color: rgba(0, 0, 0, 0.5); z-index: 1;
     }
-
     .container {
       position: relative;
       z-index: 2;
@@ -47,24 +44,23 @@
       width: 90%;
       max-width: 550px;
       animation: fadeIn 2s ease;
+      overflow-y: auto;
+      max-height: 90vh;
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
-
-    h1 {
+    h1, h2 {
       font-size: 28px;
-      margin-bottom: 25px;
+      margin-bottom: 15px;
       text-shadow: 0 0 15px #00ffff;
       font-weight: bold;
     }
-
-    input {
+    input, textarea {
       width: 100%;
       padding: 12px;
-      margin: 15px 0;
+      margin: 10px 0;
       border-radius: 8px;
       border: none;
       background: rgba(255, 255, 255, 0.2);
@@ -72,12 +68,11 @@
       outline: none;
       font-size: 16px;
     }
-
     .button, .confirm {
       display: block;
       width: 100%;
       padding: 14px;
-      margin: 12px 0;
+      margin: 8px 0;
       color: #fff;
       background: linear-gradient(135deg, #ff0040, #ff9900, #00ffff);
       border: none;
@@ -89,21 +84,17 @@
       transition: transform 0.3s ease;
       cursor: pointer;
     }
-
     .button:hover, .confirm:hover {
       transform: scale(1.05);
       box-shadow: 0 0 15px #ffffff77;
     }
-
     @keyframes pulse {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
-    .hidden { display: none; opacity: 0; transition: opacity 0.5s ease; }
-    .visible { display: block; opacity: 1; }
-
+    .hidden { display: none; }
+    .visible { display: block; }
     .logo {
       width: 120px;
       height: 120px;
@@ -111,31 +102,42 @@
       margin: 0 auto 20px auto;
       animation: logoFade 3s ease forwards;
     }
-
     @keyframes logoFade {
       0% { opacity: 0; transform: scale(0); }
       100% { opacity: 1; transform: scale(1); }
     }
-
-    #stats {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #fff;
-    }
-
+    #stats { margin-top: 10px; font-size: 14px; color: #fff; }
     footer {
       position: absolute;
-      bottom: 15px;
+      bottom: 10px;
       width: 100%;
       text-align: center;
       font-size: 13px;
       color: #ccc;
       z-index: 2;
     }
+    #commentsBox {
+      max-height: 200px;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      text-align: left;
+      font-size: 14px;
+    }
+    #commentsBox p {
+      margin: 5px 0;
+    }
   </style>
 </head>
 <body>
   <div class="overlay"></div>
+  <audio id="bgMusic" loop>
+    <source src="https://files.catbox.moe/occtjs.mp3" type="audio/mpeg">
+    <source src="https://files.catbox.moe/ndp6ep.m4a" type="audio/mp4">
+  </audio>
+
   <div class="container">
     <img class="logo" src="https://files.catbox.moe/c6g5ui.jpg" alt="INCONNU LOGO" />
     <h1>WELCOME TO INCONNU TECH BOT SESSION</h1>
@@ -146,12 +148,20 @@
     </div>
 
     <div id="buttonSection" class="hidden">
+      <h2 id="welcomeUser"></h2>
       <a href="/pair" class="button" target="_blank">PAIRING-CODE</a>
       <a href="/qr" class="button" target="_blank">QR-CODE</a>
       <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" class="button" target="_blank">FORK INCONNU-XD-V1</a>
       <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" class="button" target="_blank">FORK INCONNU-XD-V2</a>
       <a href="https://github.com/INCONNU-BOY/QUEEN-ASUNA-MD/fork" class="button" target="_blank">FORK QUEEN-ASUNA-MD</a>
       <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" class="button" target="_blank">WHATSAPP</a>
+
+      <div id="commentsSection">
+        <h2>💬 Live Comments</h2>
+        <div id="commentsBox"></div>
+        <input type="text" id="commentInput" placeholder="Write a comment..."/>
+        <button class="confirm" onclick="sendComment()">Send Comment</button>
+      </div>
     </div>
 
     <div id="stats">👀 Views: <span id="viewCount">0</span></div>
@@ -161,16 +171,18 @@
     POWERED BY INCONNU BOYTECH &copy; <span id="currentYear"></span>
   </footer>
 
+  <script src="/socket.io/socket.io.js"></script>
   <script>
     document.getElementById("currentYear").textContent = new Date().getFullYear();
 
+    // Views Counter (local)
     const viewCount = document.getElementById("viewCount");
-
-    // Gérer les vues stockées en local
     let views = parseInt(localStorage.getItem("views") || 0);
     views++;
     localStorage.setItem("views", views);
     viewCount.innerText = views;
+
+    const socket = io();
 
     function confirmName() {
       const name = document.getElementById("username").value.trim();
@@ -179,10 +191,29 @@
         document.getElementById("nameSection").classList.add("hidden");
         document.getElementById("buttonSection").classList.remove("hidden");
         document.getElementById("buttonSection").classList.add("visible");
+        document.getElementById("welcomeUser").innerText = "Bienvenue, " + name + "!";
+        document.getElementById("bgMusic").play();
       } else {
         alert("Please enter a valid name.");
       }
     }
+
+    function sendComment() {
+      const username = localStorage.getItem("username") || "Anonymous";
+      const comment = document.getElementById("commentInput").value.trim();
+      if (comment.length > 0) {
+        socket.emit('newComment', { username, comment });
+        document.getElementById("commentInput").value = "";
+      }
+    }
+
+    socket.on('broadcastComment', (data) => {
+      const box = document.getElementById("commentsBox");
+      const p = document.createElement("p");
+      p.textContent = `${data.username}: ${data.comment}`;
+      box.appendChild(p);
+      box.scrollTop = box.scrollHeight;
+    });
   </script>
 </body>
 </html>

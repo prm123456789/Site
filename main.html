@@ -17,50 +17,43 @@
       color: #fff;
     }
 
-    /* Intro */
+    #introScreen, #nameSection, .container, footer {
+      transition: all 0.5s ease;
+    }
+
     #introScreen {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: black; display: flex; justify-content: center; align-items: center; flex-direction: column;
-      animation: fadeOut 1s ease forwards; animation-delay: 5s;
-      z-index: 10;
+      animation: fadeOut 1s ease forwards; animation-delay: 5s; z-index: 10;
     }
     #introCD {
       width: 120px; height: 120px; border-radius: 50%;
       background-image: url('https://files.catbox.moe/c6g5ui.jpg');
-      background-size: cover;
-      animation: spin 3s linear infinite;
-      margin-bottom: 20px;
+      background-size: cover; animation: spin 3s linear infinite; margin-bottom: 20px;
     }
     @keyframes spin { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
     @keyframes fadeOut { to {opacity: 0; visibility: hidden;} }
 
-    /* Name Section */
     #nameSection {
-      display: none;
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85);
-      display: flex; justify-content: center; align-items: center; flex-direction: column;
-      z-index: 5;
-      text-align: center;
-      padding: 20px;
+      display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; flex-direction: column;
+      z-index: 5; text-align: center; padding: 20px;
     }
     #nameSection img {
-      width: 150px; height: 150px; border-radius: 50%; margin-bottom: 20px;
-      animation: spin 5s linear infinite;
+      width: 150px; height: 150px; border-radius: 50%; margin-bottom: 20px; animation: spin 5s linear infinite;
     }
     #nameSection h2 {
-      margin-bottom: 10px;
-      font-size: 22px;
-      color: #00ffff;
-      text-shadow: 0 0 10px #00ffff;
+      margin-bottom: 10px; font-size: 24px; color: #00ffff; text-shadow: 0 0 15px #00ffff;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% {text-shadow: 0 0 10px #00ffff;}
+      50% {text-shadow: 0 0 30px #00ffff;}
     }
     #username {
       padding: 14px; border-radius: 12px; border: 2px solid #00ffff;
-      width: 80%; max-width: 300px;
-      background: rgba(0,0,0,0.7);
-      color: #00ffff;
-      font-size: 18px; text-align: center;
-      box-shadow: 0 0 10px #00ffff;
+      width: 80%; max-width: 300px; background: rgba(0,0,0,0.7);
+      color: #00ffff; font-size: 18px; text-align: center; box-shadow: 0 0 10px #00ffff;
     }
     #username:focus { box-shadow: 0 0 20px #00ffff; outline: none; }
     #nameSection button {
@@ -68,71 +61,36 @@
       background: #00ffff; color: black; font-weight: bold; cursor: pointer;
     }
 
-    .container {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      padding: 40px;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 20px;
-      width: 90%; max-width: 550px;
-      margin: 50px auto;
-      display: none;
+    .infoBar {
+      margin-top: 15px; font-size: 14px; color: #00ffcc; text-shadow: 0 0 10px #00ffcc;
+      animation: pulse 2s infinite;
     }
 
+    .container {
+      position: relative; z-index: 2; text-align: center;
+      padding: 40px; background: rgba(0, 0, 0, 0.5);
+      border-radius: 20px; width: 90%; max-width: 550px; margin: 50px auto; display: none;
+    }
     .btn {
-      width: 220px;
-      padding: 14px 22px;
-      margin: 10px;
+      width: 220px; padding: 14px 22px; margin: 10px;
       background-image: url('https://files.catbox.moe/c6g5ui.jpg');
-      background-size: cover;
-      border-radius: 30px;
-      border: 2px solid #fff;
-      color: #fff;
-      font-size: 16px;
-      font-weight: bold;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.4s ease;
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4);
-      position: relative;
-      overflow: hidden;
-      display: inline-block;
+      background-size: cover; border-radius: 30px; border: 2px solid #fff;
+      color: #fff; font-size: 16px; font-weight: bold; text-transform: uppercase;
+      cursor: pointer; transition: all 0.4s ease; box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4);
+      position: relative; overflow: hidden; display: inline-block;
     }
     .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.2);
-      transform: skewX(-45deg);
-      transition: all 0.5s;
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.2); transform: skewX(-45deg); transition: all 0.5s;
     }
     .btn:hover::before { left: 100%; }
     .btn:hover { box-shadow: 0 6px 30px rgba(255, 255, 255, 0.6); transform: scale(1.05); }
 
-    /* Gift Effects Realistic */
-    .gift {
-      position: absolute;
-      left: -300px;
-      bottom: 100px;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 30px;
-      font-weight: bold;
-      font-size: 16px;
-      opacity: 0.95;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-      animation: slideGift 3s ease-out forwards;
-      pointer-events: none;
-    }
+    .gift { position: absolute; left: -300px; bottom: 100px; color: white; padding: 12px 20px; border-radius: 30px; font-weight: bold; font-size: 16px; opacity: 0.95; box-shadow: 0 8px 20px rgba(0,0,0,0.6); animation: slideGift 3s ease-out forwards; pointer-events: none; }
     .gift.boost { background: linear-gradient(135deg, #ff9900, #ffcc00); }
     .gift.superfan { background: linear-gradient(135deg, #00c6ff, #0072ff); }
     .gift.star { background: linear-gradient(135deg, #ff4dd2, #ff0066); }
     .gift.love { background: linear-gradient(135deg, #ff5e62, #ff9966); }
-
     @keyframes slideGift {
       0% { left: -300px; opacity: 0; transform: scale(0.8) rotate(-10deg); }
       30% { left: 30px; opacity: 1; transform: scale(1.05) rotate(5deg); }
@@ -140,9 +98,7 @@
       100% { left: 60px; opacity: 0; transform: scale(0.95) rotate(0deg); }
     }
 
-    footer {
-      position: absolute; bottom: 10px; width: 100%; text-align: center; font-size: 12px; color: #ccc;
-    }
+    footer { position: absolute; bottom: 10px; width: 100%; text-align: center; font-size: 12px; color: #ccc; }
   </style>
 </head>
 <body>
@@ -158,6 +114,9 @@
   <img src="https://files.catbox.moe/c6g5ui.jpg" alt="CD Image">
   <h2>ENTER YOUR LEGENDARY NAME</h2>
   <input type="text" id="username" placeholder="Your Name Here">
+  <div class="infoBar">
+    Battery: <span id="batteryLevel">Detecting...</span> | Time: <span id="currentTime">00:00</span>
+  </div>
   <button onclick="confirmName()">CONFIRM</button>
 </div>
 
@@ -230,6 +189,29 @@
       }
     }, 5000);
   }
+
+  // Battery
+  if ('getBattery' in navigator) {
+    navigator.getBattery().then(function(battery) {
+      function updateBatteryStatus() {
+        document.getElementById('batteryLevel').textContent = Math.round(battery.level * 100) + '%';
+      }
+      updateBatteryStatus();
+      battery.addEventListener('levelchange', updateBatteryStatus);
+    });
+  } else {
+    document.getElementById('batteryLevel').textContent = "Not Supported";
+  }
+
+  // Time
+  function updateClock() {
+    const now = new Date();
+    const h = now.getHours().toString().padStart(2, '0');
+    const m = now.getMinutes().toString().padStart(2, '0');
+    document.getElementById('currentTime').textContent = `${h}:${m}`;
+  }
+  updateClock();
+  setInterval(updateClock, 60000);
 </script>
 
 </body>

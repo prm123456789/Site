@@ -7,211 +7,189 @@
   <link rel="icon" href="https://files.catbox.moe/c6g5ui.jpg" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
     body {
       height: 100vh;
-      background-image: url('https://files.catbox.moe/e1k73u.jpg');
-      background-size: cover;
-      background-position: center;
+      background: linear-gradient(-45deg, #1a1a1a, #000000, #1a1a1a, #000000);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
       overflow: hidden;
-      position: relative;
       color: #fff;
     }
-
-    #introScreen, #nameSection, .container, footer {
-      transition: all 0.5s ease;
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
     }
 
-    #introScreen {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: black; display: flex; justify-content: center; align-items: center; flex-direction: column;
-      animation: fadeOut 1s ease forwards; animation-delay: 5s; z-index: 10;
+    #topBar {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 10px;
+      font-size: 14px;
+      text-shadow: 0 0 8px #00ffff;
+      z-index: 10;
     }
-    #introCD {
-      width: 120px; height: 120px; border-radius: 50%;
-      background-image: url('https://files.catbox.moe/c6g5ui.jpg');
-      background-size: cover; animation: spin 3s linear infinite; margin-bottom: 20px;
-    }
-    @keyframes spin { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
-    @keyframes fadeOut { to {opacity: 0; visibility: hidden;} }
-
-    #nameSection {
-      display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; flex-direction: column;
-      z-index: 5; text-align: center; padding: 20px;
-    }
-    #nameSection img {
-      width: 150px; height: 150px; border-radius: 50%; margin-bottom: 20px; animation: spin 5s linear infinite;
-    }
-    #nameSection h2 {
-      margin-bottom: 10px; font-size: 24px; color: #00ffff; text-shadow: 0 0 15px #00ffff;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% {text-shadow: 0 0 10px #00ffff;}
-      50% {text-shadow: 0 0 30px #00ffff;}
-    }
-    #username {
-      padding: 14px; border-radius: 12px; border: 2px solid #00ffff;
-      width: 80%; max-width: 300px; background: rgba(0,0,0,0.7);
-      color: #00ffff; font-size: 18px; text-align: center; box-shadow: 0 0 10px #00ffff;
-    }
-    #username:focus { box-shadow: 0 0 20px #00ffff; outline: none; }
-    #nameSection button {
-      margin-top: 12px; padding: 12px 24px; border: none; border-radius: 8px;
-      background: #00ffff; color: black; font-weight: bold; cursor: pointer;
-    }
-
-    .infoBar {
-      margin-top: 15px; font-size: 14px; color: #00ffcc; text-shadow: 0 0 10px #00ffcc;
-      animation: pulse 2s infinite;
+    #currentTime, #batteryLevel {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 6px 12px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #00ffff;
+      color: #00ffff;
+      font-weight: bold;
+      letter-spacing: 1px;
     }
 
     .container {
-      position: relative; z-index: 2; text-align: center;
-      padding: 40px; background: rgba(0, 0, 0, 0.5);
-      border-radius: 20px; width: 90%; max-width: 550px; margin: 50px auto; display: none;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 20px;
+      width: 90%;
+      max-width: 550px;
+      margin: 100px auto 50px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(0,255,255,0.2);
+      animation: fadeInContainer 2s ease;
     }
+
+    @keyframes fadeInContainer {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container h1 {
+      text-shadow: 0 0 20px #00ffff;
+      margin-bottom: 25px;
+      font-size: 26px;
+      animation: pulseText 3s infinite;
+    }
+    @keyframes pulseText {
+      0%,100% {text-shadow: 0 0 15px #00ffff;}
+      50% {text-shadow: 0 0 30px #00ffff;}
+    }
+
     .btn {
-      width: 220px; padding: 14px 22px; margin: 10px;
+      width: 220px;
+      padding: 14px 22px;
+      margin: 14px;
       background-image: url('https://files.catbox.moe/c6g5ui.jpg');
-      background-size: cover; border-radius: 30px; border: 2px solid #fff;
-      color: #fff; font-size: 16px; font-weight: bold; text-transform: uppercase;
-      cursor: pointer; transition: all 0.4s ease; box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4);
-      position: relative; overflow: hidden; display: inline-block;
+      background-size: cover;
+      border-radius: 30px;
+      border: 2px solid #fff;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4);
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: btnAppear 1s forwards;
+    }
+    .btn:nth-child(2) { animation-delay: 0.3s; }
+    .btn:nth-child(3) { animation-delay: 0.6s; }
+    .btn:nth-child(4) { animation-delay: 0.9s; }
+    .btn:nth-child(5) { animation-delay: 1.2s; }
+
+    @keyframes btnAppear {
+      to {opacity: 1; transform: translateY(0);}
     }
     .btn::before {
-      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-      background: rgba(255, 255, 255, 0.2); transform: skewX(-45deg); transition: all 0.5s;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: skewX(-45deg);
+      transition: all 0.5s;
     }
     .btn:hover::before { left: 100%; }
     .btn:hover { box-shadow: 0 6px 30px rgba(255, 255, 255, 0.6); transform: scale(1.05); }
 
-    .gift { position: absolute; left: -300px; bottom: 100px; color: white; padding: 12px 20px; border-radius: 30px; font-weight: bold; font-size: 16px; opacity: 0.95; box-shadow: 0 8px 20px rgba(0,0,0,0.6); animation: slideGift 3s ease-out forwards; pointer-events: none; }
-    .gift.boost { background: linear-gradient(135deg, #ff9900, #ffcc00); }
-    .gift.superfan { background: linear-gradient(135deg, #00c6ff, #0072ff); }
-    .gift.star { background: linear-gradient(135deg, #ff4dd2, #ff0066); }
-    .gift.love { background: linear-gradient(135deg, #ff5e62, #ff9966); }
-    @keyframes slideGift {
-      0% { left: -300px; opacity: 0; transform: scale(0.8) rotate(-10deg); }
-      30% { left: 30px; opacity: 1; transform: scale(1.05) rotate(5deg); }
-      60% { left: 50px; transform: scale(1) rotate(0deg); }
-      100% { left: 60px; opacity: 0; transform: scale(0.95) rotate(0deg); }
+    #visitorCount {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffcc;
     }
 
-    footer { position: absolute; bottom: 10px; width: 100%; text-align: center; font-size: 12px; color: #ccc; }
+    footer {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      color: #ccc;
+      text-shadow: 0 0 8px #00ffff;
+    }
   </style>
 </head>
 <body>
 
-<!-- Intro -->
-<div id="introScreen">
-  <div id="introCD"></div>
-  <div>LOADING...</div>
+<!-- Heure et Batterie -->
+<div id="topBar">
+  <div id="currentTime">00:00:00</div>
+  <div id="batteryLevel">Battery: ...%</div>
 </div>
 
-<!-- Name Input -->
-<div id="nameSection">
-  <img src="https://files.catbox.moe/c6g5ui.jpg" alt="CD Image">
-  <h2>ENTER YOUR LEGENDARY NAME</h2>
-  <input type="text" id="username" placeholder="Your Name Here">
-  <div class="infoBar">
-    Battery: <span id="batteryLevel">Detecting...</span> | Time: <span id="currentTime">00:00</span>
-  </div>
-  <button onclick="confirmName()">CONFIRM</button>
-</div>
-
-<!-- Main Content -->
-<div class="container" id="mainContent">
+<div class="container">
   <h1>WELCOME TO INCONNU TECH BOT SESSION</h1>
   <a href="/pair" target="_blank" class="btn">PAIR CODE</a>
   <a href="/qr" target="_blank" class="btn">QR CODE</a>
   <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" target="_blank" class="btn">FORK</a>
   <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="btn">WHATSAPP</a>
+
+  <div id="visitorCount">Visitors: 0</div>
 </div>
 
 <footer>POWERED BY INCONNU BOYTECH © <span id="currentYear"></span></footer>
 
-<audio id="bgMusic" preload="auto"></audio>
-
 <script>
+  // Année Footer
   document.getElementById("currentYear").textContent = new Date().getFullYear();
 
-  const playlist = [
-    "https://files.catbox.moe/occtjs.mp3",
-    "https://files.catbox.moe/o2nv71.mp3",
-    "https://files.catbox.moe/ndp6ep.m4a"
-  ];
-  let currentTrack = 0;
-  const audio = document.getElementById('bgMusic');
-
-  function playNextTrack() {
-    audio.src = playlist[currentTrack];
-    audio.play();
-    currentTrack = (currentTrack + 1) % playlist.length;
+  // Horloge
+  function updateClock() {
+    const now = new Date();
+    const h = now.getHours().toString().padStart(2, '0');
+    const m = now.getMinutes().toString().padStart(2, '0');
+    const s = now.getSeconds().toString().padStart(2, '0');
+    document.getElementById('currentTime').textContent = `${h}:${m}:${s}`;
   }
-  audio.addEventListener('ended', playNextTrack);
+  setInterval(updateClock, 1000);
+  updateClock();
 
-  setTimeout(() => {
-    document.getElementById('introScreen').style.display = 'none';
-    document.getElementById('nameSection').style.display = 'flex';
-  }, 5000);
-
-  function confirmName() {
-    const name = document.getElementById('username').value.trim();
-    if (name) {
-      localStorage.setItem('username', name);
-      document.getElementById('nameSection').style.display = 'none';
-      document.getElementById('mainContent').style.display = 'block';
-      playNextTrack();
-      triggerGifts();
-    } else {
-      alert('Please enter your name.');
-    }
-  }
-
-  function triggerGifts() {
-    setInterval(() => {
-      const gifts = [
-        {text: "🚀 MEGA BOOST RECEIVED!", class: "boost"},
-        {text: "💎 SUPER FAN SENT A GIFT!", class: "superfan"},
-        {text: "🌟 STAR SUPPORTER!", class: "star"},
-        {text: "❤️ FAN LOVE INCOMING!", class: "love"},
-      ];
-      for (let i = 0; i < 3; i++) {
-        setTimeout(() => {
-          const gift = gifts[Math.floor(Math.random() * gifts.length)];
-          const giftDiv = document.createElement('div');
-          giftDiv.className = 'gift ' + gift.class;
-          giftDiv.textContent = gift.text;
-          document.body.appendChild(giftDiv);
-          setTimeout(() => document.body.removeChild(giftDiv), 3000);
-        }, i * 300);
-      }
-    }, 5000);
-  }
-
-  // Battery
+  // Batterie
   if ('getBattery' in navigator) {
     navigator.getBattery().then(function(battery) {
       function updateBatteryStatus() {
-        document.getElementById('batteryLevel').textContent = Math.round(battery.level * 100) + '%';
+        document.getElementById('batteryLevel').textContent = "Battery: " + Math.round(battery.level * 100) + '%';
       }
       updateBatteryStatus();
       battery.addEventListener('levelchange', updateBatteryStatus);
     });
   } else {
-    document.getElementById('batteryLevel').textContent = "Not Supported";
+    document.getElementById('batteryLevel').textContent = "Battery: N/A";
   }
 
-  // Time
-  function updateClock() {
-    const now = new Date();
-    const h = now.getHours().toString().padStart(2, '0');
-    const m = now.getMinutes().toString().padStart(2, '0');
-    document.getElementById('currentTime').textContent = `${h}:${m}`;
-  }
-  updateClock();
-  setInterval(updateClock, 60000);
+  // Compteur de visiteurs local (localStorage)
+  let visits = localStorage.getItem('visitCount') || 0;
+  visits++;
+  localStorage.setItem('visitCount', visits);
+  document.getElementById('visitorCount').textContent = "Visitors: " + visits;
 </script>
 
 </body>

@@ -6,7 +6,12 @@
   <title>INCONNU PORTAL</title>
   <link rel="icon" href="https://files.catbox.moe/c6g5ui.jpg" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
     body {
       height: 100vh;
       background: linear-gradient(135deg, #1a1a40, #2e2ecf, #ff00cc);
@@ -22,7 +27,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Intro CD Loading */
+    /* Intro CD */
     #introScreen {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: black; display: flex; justify-content: center; align-items: center; flex-direction: column;
@@ -39,7 +44,7 @@
     @keyframes spin { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
     @keyframes fadeOut { to {opacity: 0; visibility: hidden;} }
 
-    /* Name Input Fullscreen */
+    /* Name Input */
     #nameSection {
       display: none;
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -64,7 +69,7 @@
     }
     #nameSection button:hover { transform: scale(1.05); }
 
-    /* Main container */
+    /* Container */
     .container {
       position: relative;
       z-index: 2;
@@ -80,76 +85,51 @@
       display: none;
     }
 
-    /* New Buttons Style */
+    /* Modern Button Styles */
     .btn {
       width: 220px;
       padding: 14px 22px;
       margin: 10px;
       background-image: url('https://files.catbox.moe/c6g5ui.jpg');
       background-size: cover;
-      border-radius: 25px;
-      border: 2px solid #ffffff;
-      font-size: 18px;
+      border-radius: 30px;
+      border: 2px solid #fff;
+      color: #fff;
+      font-size: 16px;
       font-weight: bold;
       text-transform: uppercase;
-      color: white;
       text-align: center;
-      position: absolute;
-      overflow: hidden;
       cursor: pointer;
       transition: all 0.4s ease;
-      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4);
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
     }
     .btn::before {
       content: '';
       position: absolute;
-      top: -50%;
-      left: -50%;
-      height: 200%;
-      width: 200%;
-      background: rgba(255, 255, 255, 0.3);
-      transform: skewX(45deg);
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: skewX(-45deg);
       transition: all 0.5s;
     }
     .btn:hover::before {
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
+      left: 100%;
     }
     .btn:hover {
-      background-color: #ffffffaa;
-      color: #333;
-      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.5);
+      box-shadow: 0 6px 30px rgba(255, 255, 255, 0.6);
       transform: scale(1.05);
     }
-    .btn:active {
-      filter: brightness(0.9);
-      transform: scale(0.98);
-    }
 
-    /* Positions des boutons */
-    #topBtn { top: 30px; left: 50%; transform: translateX(-50%); }
-    #leftBtn { left: 30px; top: 50%; transform: translateY(-50%); }
-    #rightBtn { right: 30px; top: 50%; transform: translateY(-50%); }
-    #bottomBtn { bottom: 30px; left: 50%; transform: translateX(-50%); }
-
-    /* Comments Section */
-    #commentsSection {
-      position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
-      width: 90%; max-width: 500px;
-      background: rgba(0,0,0,0.6);
-      border-radius: 8px; padding: 10px;
-      overflow-y: auto; max-height: 200px; font-size: 14px;
-    }
-    #commentsBox p { margin: 5px 0; }
-    #commentInput {
-      width: 100%; padding: 8px; margin-top: 5px; border-radius: 6px; border: none;
-    }
-    #sendCommentBtn {
-      width: 100%; margin-top: 5px; padding: 8px; background: #00ff99;
-      border: none; border-radius: 6px; cursor: pointer; color: black; font-weight: bold;
-    }
+    /* Position */
+    #topBtn { display: block; margin: 15px auto; }
+    #leftBtn { display: block; margin: 15px auto; }
+    #rightBtn { display: block; margin: 15px auto; }
+    #bottomBtn { display: block; margin: 15px auto; }
 
     footer {
       position: absolute; bottom: 10px; width: 100%; text-align: center; font-size: 12px; color: #ccc;
@@ -164,7 +144,7 @@
   <div>LOADING...</div>
 </div>
 
-<!-- Name Input Screen -->
+<!-- Name Input -->
 <div id="nameSection">
   <img src="https://files.catbox.moe/c6g5ui.jpg" alt="CD Image">
   <input type="text" id="username" placeholder="Enter your name...">
@@ -184,17 +164,10 @@
   <a href="/qr" target="_blank" class="btn" id="leftBtn">QR CODE</a>
   <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" target="_blank" class="btn" id="rightBtn">FORK</a>
   <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="btn" id="bottomBtn">WHATSAPP</a>
-
-  <div id="commentsSection">
-    <div id="commentsBox"></div>
-    <input type="text" id="commentInput" placeholder="Write a comment...">
-    <button id="sendCommentBtn">Send</button>
-  </div>
 </div>
 
 <footer>POWERED BY INCONNU BOYTECH © <span id="currentYear"></span></footer>
 
-<script src="/socket.io/socket.io.js"></script>
 <script>
   document.getElementById("currentYear").textContent = new Date().getFullYear();
 
@@ -203,35 +176,6 @@
     document.getElementById('nameSection').style.display = 'flex';
   }, 5000);
 
-  const socket = io();
-
-  function appendComment(username, comment) {
-    const box = document.getElementById('commentsBox');
-    const p = document.createElement('p');
-    p.textContent = username + ": " + comment;
-    box.appendChild(p);
-    box.scrollTop = box.scrollHeight;
-  }
-
-  socket.on('loadComments', (data) => {
-    const box = document.getElementById('commentsBox');
-    box.innerHTML = "";
-    data.forEach(c => appendComment(c.username, c.comment));
-  });
-
-  socket.on('broadcastComment', (data) => {
-    appendComment(data.username, data.comment);
-  });
-
-  document.getElementById('sendCommentBtn').addEventListener('click', () => {
-    const username = localStorage.getItem('username') || 'Anonymous';
-    const comment = document.getElementById('commentInput').value.trim();
-    if (comment.length > 0) {
-      socket.emit('newComment', { username, comment });
-      document.getElementById('commentInput').value = '';
-    }
-  });
-
   function confirmName() {
     const name = document.getElementById('username').value.trim();
     if (name) {
@@ -239,7 +183,6 @@
       document.getElementById('nameSection').style.display = 'none';
       document.getElementById('mainContent').style.display = 'block';
       document.getElementById('bgMusic').play();
-      socket.emit('requestComments');
     } else {
       alert('Please enter your name.');
     }

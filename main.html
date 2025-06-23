@@ -14,20 +14,15 @@
     }
     body {
       height: 100vh;
-      background: linear-gradient(135deg, #1a1a40, #2e2ecf, #ff00cc);
-      background-size: 400% 400%;
-      animation: rainbowBG 15s ease infinite;
+      background-image: url('https://files.catbox.moe/e1k73u.jpg');
+      background-size: cover;
+      background-position: center;
       overflow: hidden;
       position: relative;
       color: #fff;
     }
-    @keyframes rainbowBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
 
-    /* Intro CD */
+    /* CD Loading */
     #introScreen {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: black; display: flex; justify-content: center; align-items: center; flex-direction: column;
@@ -44,11 +39,10 @@
     @keyframes spin { 0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);} }
     @keyframes fadeOut { to {opacity: 0; visibility: hidden;} }
 
-    /* Name Input */
     #nameSection {
       display: none;
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.9);
+      background: rgba(0,0,0,0.85);
       display: flex; justify-content: center; align-items: center; flex-direction: column;
       z-index: 5;
     }
@@ -65,27 +59,20 @@
     #nameSection button {
       margin-top: 12px; padding: 12px 24px; border: none; border-radius: 8px;
       background: #00ffff; color: black; font-weight: bold; cursor: pointer;
-      transition: transform 0.2s;
     }
-    #nameSection button:hover { transform: scale(1.05); }
 
-    /* Container */
     .container {
       position: relative;
       z-index: 2;
       text-align: center;
       padding: 40px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid #ffffff20;
+      background: rgba(0, 0, 0, 0.5);
       border-radius: 20px;
-      backdrop-filter: blur(15px);
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
       width: 90%; max-width: 550px;
       margin: 50px auto;
       display: none;
     }
 
-    /* Modern Button Styles */
     .btn {
       width: 220px;
       padding: 14px 22px;
@@ -98,7 +85,6 @@
       font-size: 16px;
       font-weight: bold;
       text-transform: uppercase;
-      text-align: center;
       cursor: pointer;
       transition: all 0.4s ease;
       box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4);
@@ -117,19 +103,29 @@
       transform: skewX(-45deg);
       transition: all 0.5s;
     }
-    .btn:hover::before {
-      left: 100%;
-    }
-    .btn:hover {
-      box-shadow: 0 6px 30px rgba(255, 255, 255, 0.6);
-      transform: scale(1.05);
-    }
+    .btn:hover::before { left: 100%; }
+    .btn:hover { box-shadow: 0 6px 30px rgba(255, 255, 255, 0.6); transform: scale(1.05); }
 
-    /* Position */
-    #topBtn { display: block; margin: 15px auto; }
-    #leftBtn { display: block; margin: 15px auto; }
-    #rightBtn { display: block; margin: 15px auto; }
-    #bottomBtn { display: block; margin: 15px auto; }
+    /* Gift animation */
+    .gift {
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.1);
+      border: 2px solid #fff;
+      border-radius: 20px;
+      padding: 10px 20px;
+      color: #fff;
+      font-weight: bold;
+      opacity: 0.8;
+      animation: floatUp 3s ease-out forwards;
+      pointer-events: none;
+    }
+    @keyframes floatUp {
+      0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+      100% { transform: translateX(-50%) translateY(-300px); opacity: 0; }
+    }
 
     footer {
       position: absolute; bottom: 10px; width: 100%; text-align: center; font-size: 12px; color: #ccc;
@@ -138,7 +134,7 @@
 </head>
 <body>
 
-<!-- Intro Loading -->
+<!-- Intro -->
 <div id="introScreen">
   <div id="introCD"></div>
   <div>LOADING...</div>
@@ -153,23 +149,37 @@
 
 <!-- Main Content -->
 <div class="container" id="mainContent">
-  <audio id="bgMusic" loop>
-    <source src="https://files.catbox.moe/occtjs.mp3" type="audio/mpeg">
-    <source src="https://files.catbox.moe/ndp6ep.m4a" type="audio/mp4">
-  </audio>
-
   <h1>WELCOME TO INCONNU TECH BOT SESSION</h1>
 
-  <a href="/pair" target="_blank" class="btn" id="topBtn">PAIR CODE</a>
-  <a href="/qr" target="_blank" class="btn" id="leftBtn">QR CODE</a>
-  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" target="_blank" class="btn" id="rightBtn">FORK</a>
-  <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="btn" id="bottomBtn">WHATSAPP</a>
+  <a href="/pair" target="_blank" class="btn">PAIR CODE</a>
+  <a href="/qr" target="_blank" class="btn">QR CODE</a>
+  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" target="_blank" class="btn">FORK</a>
+  <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="btn">WHATSAPP</a>
 </div>
 
 <footer>POWERED BY INCONNU BOYTECH © <span id="currentYear"></span></footer>
 
+<!-- Playlist Music -->
+<audio id="bgMusic" preload="auto"></audio>
+
 <script>
   document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+  const playlist = [
+    "https://files.catbox.moe/occtjs.mp3",
+    "https://files.catbox.moe/o2nv71.mp3",
+    "https://files.catbox.moe/ndp6ep.m4a"
+  ];
+  let currentTrack = 0;
+  const audio = document.getElementById('bgMusic');
+
+  function playNextTrack() {
+    audio.src = playlist[currentTrack];
+    audio.play();
+    currentTrack = (currentTrack + 1) % playlist.length;
+  }
+
+  audio.addEventListener('ended', playNextTrack);
 
   setTimeout(() => {
     document.getElementById('introScreen').style.display = 'none';
@@ -182,10 +192,23 @@
       localStorage.setItem('username', name);
       document.getElementById('nameSection').style.display = 'none';
       document.getElementById('mainContent').style.display = 'block';
-      document.getElementById('bgMusic').play();
+      playNextTrack();
+      triggerGifts();
     } else {
       alert('Please enter your name.');
     }
+  }
+
+  // Random gift effect
+  function triggerGifts() {
+    setInterval(() => {
+      const gifts = ["💎 Super Gift", "❤️ New Supporter", "🌟 Star Drop", "🚀 Mega Boost"];
+      const giftDiv = document.createElement('div');
+      giftDiv.className = 'gift';
+      giftDiv.textContent = gifts[Math.floor(Math.random() * gifts.length)];
+      document.body.appendChild(giftDiv);
+      setTimeout(() => document.body.removeChild(giftDiv), 3000);
+    }, 7000);
   }
 </script>
 

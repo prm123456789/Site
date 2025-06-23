@@ -61,16 +61,11 @@
       color: #00ffff;
       font-size: 18px; text-align: center;
       box-shadow: 0 0 10px #00ffff;
-      transition: 0.3s ease;
     }
-    #username:focus {
-      box-shadow: 0 0 20px #00ffff;
-      outline: none;
-    }
+    #username:focus { box-shadow: 0 0 20px #00ffff; outline: none; }
     #nameSection button {
       margin-top: 12px; padding: 12px 24px; border: none; border-radius: 8px;
       background: #00ffff; color: black; font-weight: bold; cursor: pointer;
-      transition: transform 0.2s;
     }
 
     .container {
@@ -118,26 +113,31 @@
     .btn:hover::before { left: 100%; }
     .btn:hover { box-shadow: 0 6px 30px rgba(255, 255, 255, 0.6); transform: scale(1.05); }
 
-    /* Gift Effects */
+    /* Gift Effects Realistic */
     .gift {
       position: absolute;
-      bottom: -60px;
-      left: 50%;
-      transform: translateX(-50%) scale(0.8) rotate(0deg);
-      background: rgba(255,255,255,0.1);
-      border: 2px solid #fff;
-      border-radius: 20px;
-      padding: 8px 16px;
-      color: #fff;
+      left: -300px;
+      bottom: 100px;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 30px;
       font-weight: bold;
-      opacity: 0.9;
+      font-size: 16px;
+      opacity: 0.95;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      animation: slideGift 3s ease-out forwards;
       pointer-events: none;
-      animation: floatUp 2s ease-out forwards;
     }
-    @keyframes floatUp {
-      0% { transform: translateX(-50%) translateY(0) scale(1) rotate(0deg); opacity: 1; }
-      50% { transform: translateX(-50%) translateY(-150px) scale(1.2) rotate(5deg); }
-      100% { transform: translateX(-50%) translateY(-300px) scale(1) rotate(-5deg); opacity: 0; }
+    .gift.boost { background: linear-gradient(135deg, #ff9900, #ffcc00); }
+    .gift.superfan { background: linear-gradient(135deg, #00c6ff, #0072ff); }
+    .gift.star { background: linear-gradient(135deg, #ff4dd2, #ff0066); }
+    .gift.love { background: linear-gradient(135deg, #ff5e62, #ff9966); }
+
+    @keyframes slideGift {
+      0% { left: -300px; opacity: 0; transform: scale(0.8) rotate(-10deg); }
+      30% { left: 30px; opacity: 1; transform: scale(1.05) rotate(5deg); }
+      60% { left: 50px; transform: scale(1) rotate(0deg); }
+      100% { left: 60px; opacity: 0; transform: scale(0.95) rotate(0deg); }
     }
 
     footer {
@@ -166,13 +166,12 @@
   <h1>WELCOME TO INCONNU TECH BOT SESSION</h1>
   <a href="/pair" target="_blank" class="btn">PAIR CODE</a>
   <a href="/qr" target="_blank" class="btn">QR CODE</a>
-  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V1/fork" target="_blank" class="btn">FORK</a>
+  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" target="_blank" class="btn">FORK</a>
   <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="btn">WHATSAPP</a>
 </div>
 
 <footer>POWERED BY INCONNU BOYTECH © <span id="currentYear"></span></footer>
 
-<!-- Music Playlist -->
 <audio id="bgMusic" preload="auto"></audio>
 
 <script>
@@ -213,15 +212,20 @@
 
   function triggerGifts() {
     setInterval(() => {
-      const gifts = ["💎 Super Gift", "❤️ Fan Love", "🌟 Star Drop", "🚀 Boost", "🔥 Fire Support"];
+      const gifts = [
+        {text: "🚀 MEGA BOOST RECEIVED!", class: "boost"},
+        {text: "💎 SUPER FAN SENT A GIFT!", class: "superfan"},
+        {text: "🌟 STAR SUPPORTER!", class: "star"},
+        {text: "❤️ FAN LOVE INCOMING!", class: "love"},
+      ];
       for (let i = 0; i < 3; i++) {
         setTimeout(() => {
+          const gift = gifts[Math.floor(Math.random() * gifts.length)];
           const giftDiv = document.createElement('div');
-          giftDiv.className = 'gift';
-          giftDiv.style.left = (Math.random() * 80 + 10) + "%";
-          giftDiv.textContent = gifts[Math.floor(Math.random() * gifts.length)];
+          giftDiv.className = 'gift ' + gift.class;
+          giftDiv.textContent = gift.text;
           document.body.appendChild(giftDiv);
-          setTimeout(() => document.body.removeChild(giftDiv), 2500);
+          setTimeout(() => document.body.removeChild(giftDiv), 3000);
         }, i * 300);
       }
     }, 5000);

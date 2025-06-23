@@ -1,3 +1,5 @@
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +24,50 @@
       100% {background-position: 0% 50%;}
     }
 
+    /* Intro Screen */
+    #introScreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 999;
+      animation: fadeOutIntro 1s ease forwards;
+      animation-delay: 5s;
+    }
+    @keyframes fadeOutIntro {
+      to {opacity: 0; visibility: hidden;}
+    }
+    #introLogo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-image: url('https://files.catbox.moe/c6g5ui.jpg');
+      background-size: cover;
+      margin-bottom: 20px;
+      animation: spin 2s linear infinite;
+      box-shadow: 0 0 20px #00ffff;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .introText {
+      color: #00ffff;
+      margin: 5px 0;
+      font-size: 18px;
+      text-shadow: 0 0 10px #00ffff;
+      animation: fadeInText 2s ease infinite alternate;
+    }
+    @keyframes fadeInText {
+      from { opacity: 0.3; }
+      to { opacity: 1; }
+    }
+
+    /* TopBar Time/Battery */
     #topBar {
       position: absolute;
       top: 10px;
@@ -57,12 +103,7 @@
       box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
       backdrop-filter: blur(8px);
       border: 1px solid rgba(0,255,255,0.2);
-      animation: fadeInContainer 2s ease;
-    }
-
-    @keyframes fadeInContainer {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+      display: none;
     }
 
     .container h1 {
@@ -139,13 +180,22 @@
 </head>
 <body>
 
+<!-- Intro Screen -->
+<div id="introScreen">
+  <div id="introLogo"></div>
+  <div class="introText">Site Loading...</div>
+  <div class="introText">Wait...</div>
+  <div class="introText">INCONNU BOY TECH site......</div>
+</div>
+
 <!-- Heure et Batterie -->
 <div id="topBar">
   <div id="currentTime">00:00:00</div>
   <div id="batteryLevel">Battery: ...%</div>
 </div>
 
-<div class="container">
+<!-- Main Content -->
+<div class="container" id="mainContent">
   <h1>WELCOME TO INCONNU TECH BOT SESSION</h1>
   <a href="/pair" target="_blank" class="btn">PAIR CODE</a>
   <a href="/qr" target="_blank" class="btn">QR CODE</a>
@@ -158,7 +208,6 @@
 <footer>POWERED BY INCONNU BOYTECH © <span id="currentYear"></span></footer>
 
 <script>
-  // Année Footer
   document.getElementById("currentYear").textContent = new Date().getFullYear();
 
   // Horloge
@@ -185,11 +234,17 @@
     document.getElementById('batteryLevel').textContent = "Battery: N/A";
   }
 
-  // Compteur de visiteurs local (localStorage)
+  // Visitors Counter Local
   let visits = localStorage.getItem('visitCount') || 0;
   visits++;
   localStorage.setItem('visitCount', visits);
   document.getElementById('visitorCount').textContent = "Visitors: " + visits;
+
+  // Hide Intro after 5s and show main content
+  setTimeout(() => {
+    document.getElementById('introScreen').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+  }, 5000);
 </script>
 
 </body>

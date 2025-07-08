@@ -20,6 +20,8 @@
     "path": "^0.12.7",
     "megajs": "1.1.7",
     "pm2": "^5.4.0",
-    "async-mutex": "0.4.1"
+    "async-mutex": "0.4.1",
+    "node-fetch": "^2.6.9",
+    "unzipper": "^0.10.11"
   }
 }

